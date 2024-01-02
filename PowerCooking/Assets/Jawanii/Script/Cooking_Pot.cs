@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Cooking_Pot : MonoBehaviour
@@ -7,6 +8,9 @@ public class Cooking_Pot : MonoBehaviour
     #region  Variable;
 
     public bool isPlayer;
+
+    private RaycastHit raycastHit;
+    private float maxDistance = 5;
 
     [Header("Input")]
     public int keyAmount = 4;
@@ -27,6 +31,21 @@ public class Cooking_Pot : MonoBehaviour
     protected Pot_Type currentType;
 
     #endregion
+    private void Start()
+    {
+
+    }
+    private void Update()
+    {
+       /* if(Physics.BoxCast(transform.position + Vector3.right * 1.1f, Vector2.zero, ))
+        {
+            if(raycastHit.transform.CompareTag("Player")) 
+            {
+                isPlayer = true;
+            }
+        }
+        else isPlayer = false; */
+    }
 
     private void OnMouseDown()
     {

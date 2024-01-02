@@ -35,7 +35,7 @@ Transform:
   m_Children:
   - {fileID: 3266426594229344667}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3465441378427482299
 MonoBehaviour:
@@ -59,7 +59,7 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 90e6d49a-248d-4f75-8ed8-bb11f9fd7002
-      m_Path: <Mouse>/leftButton
+      m_Path: <Mouse>/rightButton
       m_Interactions: 
       m_Processors: 
       m_Groups: 

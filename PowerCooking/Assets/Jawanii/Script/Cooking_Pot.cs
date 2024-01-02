@@ -7,6 +7,16 @@ public class Cooking_Pot : MonoBehaviour
 {
     #region  Variable;
 
+    [SerializeField] protected GameObject foodPrefab;
+
+    public FoodKind currentKind;
+
+    public float coolTime = 0;
+
+    private float curCoolTime = 0;
+
+    private bool canCook;
+
     public bool isPlayer;
     public bool isPlaying;
 
@@ -44,7 +54,6 @@ public class Cooking_Pot : MonoBehaviour
             if (raycastHit.transform.CompareTag("Player"))
             {
                 isPlayer = true;
-                Debug.Log("엄");
             }
         }
         else isPlayer = false;
@@ -86,48 +95,50 @@ public class Cooking_Pot : MonoBehaviour
                     yield return null;
                     if (Input.GetKeyDown(obj.keyCode))
                     {
-                        Debug.Log("성공");
                         Destroy(obj.gameObject);
                         break;
                     }
                     else if (Input.GetKeyDown(KeyCode.W) && !Input.GetKeyDown(obj.keyCode))
                     {
-                        Debug.Log("실패");
                         Destroy(obj.gameObject);
                         fail++;
                         break;
                     }
                     else if (Input.GetKeyDown(KeyCode.A) && !Input.GetKeyDown(obj.keyCode))
                     {
-                        Debug.Log("실패");
                         Destroy(obj.gameObject);
                         fail++;
                         break;
                     }
                     else if (Input.GetKeyDown(KeyCode.S) && !Input.GetKeyDown(obj.keyCode))
                     {
-                        Debug.Log("실패");
                         Destroy(obj.gameObject);
                         fail++;
                         break;
                     }
                     else if (Input.GetKeyDown(KeyCode.D) && !Input.GetKeyDown(obj.keyCode))
                     {
-                        Debug.Log("실패");
                         Destroy(obj.gameObject);
                         fail++;
                         break;
                     }
                 }
-                 
-                if (fail > 0) break;
+
+                if (fail > 0)
+                {
+                    var player = raycastHit.transform.GetComponent<Playerinteraction>();
+                    player.AddFood(currentKind);
+                    Instantiate(foodPrefab, player.transform);
+                    break;
+                }
+
             }
-            isPlaying = false;  
+            isPlaying = false;
         }
     }
     protected void KeyBeat()
     {
-        isPlaying = true;  
+        isPlaying = true;
         StartCoroutine(func());
         IEnumerator func()
         {
@@ -139,10 +150,17 @@ public class Cooking_Pot : MonoBehaviour
                 yield return null;
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) count--;
 
-                if (count < 0) break;
+                if (count <= 0)
+                {
+                    var player = raycastHit.transform.GetComponent<Playerinteraction>();
+                    player.AddFood(currentKind);
+                    var food = Instantiate(foodPrefab, player.transform);
+                    food.transform.localPosition = new Vector3(0,1,0);
+                    break;
+                }
             }
             Destroy(obj.gameObject);
-            isPlaying = false;  
+            isPlaying = false;
         }
     }
 }

@@ -4,13 +4,11 @@ using UnityEngine;
 
 public enum FoodKind
 {
+    Null,
     Stew
 
 }
 public class Food : MonoBehaviour
 {
-    [SerializeField] protected GameObject foodPrefab;
-    
-    public FoodKind currentKind;
-
+    public FoodKind foodKind;
 }

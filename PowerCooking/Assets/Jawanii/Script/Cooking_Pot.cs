@@ -6,13 +6,15 @@ public class Cooking_Pot : MonoBehaviour
 {
     #region  Variable;
 
-    [Header ("Input")]
+    public bool isPlayer;
+
+    [Header("Input")]
     public int keyAmount = 4;
 
-    [Header ("Beat")]
+    [Header("Beat")]
     public int beatAmount = 30;
 
-    [Header ("Prefab")]
+    [Header("Prefab")]
 
     [SerializeField] private GameObject keyPrefab;
     [SerializeField] private GameObject beatPrefab;
@@ -26,24 +28,21 @@ public class Cooking_Pot : MonoBehaviour
 
     #endregion
 
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-
-    {
-    }
-
     private void OnMouseDown()
     {
-        KeyBeat();
+        Cook();
     }
 
     protected virtual void Cook()
     {
-        KeyInput();
+        if (isPlayer)
+        {
+            switch (currentType)
+            {
+                case Pot_Type.Input: KeyInput(); break;
+                case Pot_Type.Beat: KeyInput(); break;
+            }
+        }
     }
 
     protected void KeyInput()
@@ -103,14 +102,14 @@ public class Cooking_Pot : MonoBehaviour
         StartCoroutine(func());
         IEnumerator func()
         {
-            var obj = Instantiate(beatPrefab,transform.position + new Vector3(0,1,0), Quaternion.identity).GetComponent<TextMesh>();
+            var obj = Instantiate(beatPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity).GetComponent<TextMesh>();
             while (true)
             {
                 obj.text = beatAmount.ToString();
                 yield return null;
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))beatAmount--;
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) beatAmount--;
 
-                if(beatAmount < 0) break;
+                if (beatAmount < 0) break;
             }
             Destroy(obj.gameObject);
         }

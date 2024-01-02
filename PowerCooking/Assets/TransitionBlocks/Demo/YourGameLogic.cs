@@ -18,7 +18,7 @@ public class YourGameLogic : MonoBehaviour
         {
             Transitioner.Instance.FinishTransition();
         }
-        else if(Input.GetKeyDown(_transitionOutNoSceneSwitchKey))
+        else if (Input.GetKeyDown(_transitionOutNoSceneSwitchKey))
         {
             Transitioner.Instance.TransitionOutWithoutChangingScene();
         }

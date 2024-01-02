@@ -49,21 +49,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e000265c840254297caaccd6ba9d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseClickAction:
-    m_Name: Mouse Click
+  moveInput:
+    m_Name: Move Input
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 021066ca-f001-4449-b1ca-3930542e0323
+    m_Id: 11625489-7eac-43db-b18b-69654e45be99
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 90e6d49a-248d-4f75-8ed8-bb11f9fd7002
+      m_Id: 575a2e90-86e1-4ea9-abdb-d9af31ae577d
       m_Path: <Mouse>/rightButton
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Mouse Click
+      m_Action: Move Input
+      m_Flags: 0
+    m_Flags: 0
+  prepareCookInput:
+    m_Name: Prepare Cook Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c86bea65-2c1f-4373-94da-f0143f9dd302
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0d085d13-6274-497d-b62c-1495501e6abb
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Prepare Cook Input
       m_Flags: 0
     m_Flags: 0
   moveSpeed: 10

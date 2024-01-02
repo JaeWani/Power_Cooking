@@ -39,7 +39,7 @@ public class Cooking_Pot : MonoBehaviour
     private void Update()
     {
 
-        if (Physics.BoxCast(transform.position + Vector3.right / 6, transform.lossyScale / 2, Vector3.right / 2, out raycastHit, transform.rotation, maxDistance))
+        if (Physics.BoxCast(transform.position + Vector3.right / 4, transform.lossyScale / 2, Vector3.right / 2, out raycastHit, transform.rotation, maxDistance))
         {
             if (raycastHit.transform.CompareTag("Player"))
             {
@@ -144,9 +144,5 @@ public class Cooking_Pot : MonoBehaviour
             Destroy(obj.gameObject);
             isPlaying = false;  
         }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position, transform.localScale * 3);
     }
 }

@@ -8,9 +8,10 @@ public class Cooking_Pot : MonoBehaviour
     #region  Variable;
 
     public bool isPlayer;
+    public bool isPlaying;
 
     private RaycastHit raycastHit;
-    private float maxDistance = 5;
+    private float maxDistance = 3;
 
     [Header("Input")]
     public int keyAmount = 4;
@@ -28,7 +29,7 @@ public class Cooking_Pot : MonoBehaviour
         Input, Beat
     }
 
-    protected Pot_Type currentType;
+    [SerializeField] protected Pot_Type currentType;
 
     #endregion
     private void Start()
@@ -37,14 +38,16 @@ public class Cooking_Pot : MonoBehaviour
     }
     private void Update()
     {
-       /* if(Physics.BoxCast(transform.position + Vector3.right * 1.1f, Vector2.zero, ))
+
+        if (Physics.BoxCast(transform.position + Vector3.right / 6, transform.lossyScale / 2, Vector3.right / 2, out raycastHit, transform.rotation, maxDistance))
         {
-            if(raycastHit.transform.CompareTag("Player")) 
+            if (raycastHit.transform.CompareTag("Player"))
             {
                 isPlayer = true;
+                Debug.Log("엄");
             }
         }
-        else isPlayer = false; */
+        else isPlayer = false;
     }
 
     private void OnMouseDown()
@@ -56,16 +59,20 @@ public class Cooking_Pot : MonoBehaviour
     {
         if (isPlayer)
         {
-            switch (currentType)
+            if (!isPlaying)
             {
-                case Pot_Type.Input: KeyInput(); break;
-                case Pot_Type.Beat: KeyInput(); break;
+                switch (currentType)
+                {
+                    case Pot_Type.Input: KeyInput(); break;
+                    case Pot_Type.Beat: KeyBeat(); break;
+                }
             }
         }
     }
 
     protected void KeyInput()
     {
+        isPlaying = true;
         StartCoroutine(func());
         IEnumerator func()
         {
@@ -112,25 +119,34 @@ public class Cooking_Pot : MonoBehaviour
                         break;
                     }
                 }
+                 
                 if (fail > 0) break;
             }
+            isPlaying = false;  
         }
     }
     protected void KeyBeat()
     {
+        isPlaying = true;  
         StartCoroutine(func());
         IEnumerator func()
         {
             var obj = Instantiate(beatPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity).GetComponent<TextMesh>();
+            int count = beatAmount;
             while (true)
             {
-                obj.text = beatAmount.ToString();
+                obj.text = count.ToString();
                 yield return null;
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) beatAmount--;
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) count--;
 
-                if (beatAmount < 0) break;
+                if (count < 0) break;
             }
             Destroy(obj.gameObject);
+            isPlaying = false;  
         }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position, transform.localScale * 3);
     }
 }

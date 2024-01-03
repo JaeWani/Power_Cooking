@@ -2,9 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GuestState
+{
+    VeryGood,
+    Good,
+    Normal,
+    Bad,
+    VeryBad
+}
+
 public class Guest : MonoBehaviour
 {
-    [SerializeField] private GameObject orderObject;
+    public GameObject orderObject;
+
+    public float time = 100;
 
     public int maxOrderAmount;
 
@@ -13,9 +24,16 @@ public class Guest : MonoBehaviour
 
     public bool canInteraction = false;
 
+    public GuestState currentGuestState = GuestState.VeryGood;
+
+    public GameObject Fillng_Object;
+
     void Start()
     {
         RandomOrder();
+        var filling = Instantiate(Fillng_Object,GameManager.instance.keyCanvas.transform).GetComponent<Filling_UI>();
+        filling.StartBar(time,currentGuestState);
+        filling.guest = this;
     }
 
     private void OnMouseDown()
@@ -29,7 +47,7 @@ public class Guest : MonoBehaviour
         List<GameObject> order = new List<GameObject>();
         for (int i = 0; i < foodKinds.Count; i++)
         {
-            var kind = Random.Range(1, System.Enum.GetValues(typeof(FoodKind)).Length);
+            var kind = Random.Range(1, 4);
             foodKinds[i] = (FoodKind)kind;
         }
         int x = -1;
@@ -47,20 +65,22 @@ public class Guest : MonoBehaviour
     }
     public void Interaction()
     {
-        if(canInteraction){
-        for(int i = 0; i < foodKinds.Count; i++)
+        if (canInteraction)
         {
-            if(GameManager.instance.playerinteraction.currentFood == foodKinds[i])
+            Debug.Log("asd");
+            for (int i = 0; i < foodKinds.Count; i++)
             {
-                Debug.Log("어익호난");
-                Destroy(orders[i]);
-                GameManager.instance.playerinteraction.currentFood = FoodKind.Null;
-                Destroy(GameManager.instance.playerinteraction.foodObject);
-                foodKinds[i] = FoodKind.Null;
-                break;
+                if (GameManager.instance.playerinteraction.currentFood == foodKinds[i])
+                {
+                    Debug.Log("어익호난");
+                    Destroy(orders[i]);
+                    GameManager.instance.playerinteraction.currentFood = FoodKind.Null;
+                    Destroy(GameManager.instance.playerinteraction.foodObject);
+                    foodKinds[i] = FoodKind.Null;
+                    break;
+                }
+                else Debug.Log("엄");
             }
-            else Debug.Log("엄");
-        }
         }
     }
 }

@@ -170,51 +170,45 @@ public class Cooking_Pot : MonoBehaviour
 
     private void CheckFood()
     {
-        StartCoroutine(a());
-        IEnumerator a()
+        if (isPlayer)
         {
-            if (isPlayer)
+            Debug.Log("123123");
+            var player = GameManager.instance.playerinteraction;
+            if (player.currentFood == FoodKind.Null)
             {
-                isPocus = true;
-                var player = GameManager.instance.playerinteraction;
-                if (player.currentFood == FoodKind.Null)
+                if (resourceObject.active) resourceObject.SetActive(false);
+                else resourceObject.SetActive(true);
+            }
+            else
+            {
+                resourceObject.SetActive(true);
+                for (int i = 0; i < currentNeedResource.Count; i++)
                 {
-                    if (resourceObject.active) resourceObject.SetActive(false);
-                    else resourceObject.SetActive(true);
-                }
-                else
-                {
-                    resourceObject.SetActive(true);
-                    for (int i = 0; i < currentNeedResource.Count; i++)
+                    if (player.currentFood == currentNeedResource[i])
                     {
-                        if (player.currentFood == currentNeedResource[i])
-                        {
-                            player.currentFood = FoodKind.Null;
-                            Destroy(player.foodObject);
+                        player.currentFood = FoodKind.Null;
+                        Destroy(player.foodObject);
 
 
-                            resources[i].sprite = GameManager.instance.checkSprite;
-                            currentNeedResource[i] = FoodKind.Null;
+                        resources[i].sprite = GameManager.instance.checkSprite;
+                        currentNeedResource[i] = FoodKind.Null;
 
-                            currnetNeedResourceAmount++;
-                            Debug.Log(currnetNeedResourceAmount);
-                            break;
-                        }
-                        else continue;
+                        currnetNeedResourceAmount++;
+                        Debug.Log(currnetNeedResourceAmount);
+                        break;
                     }
+                    else continue;
                 }
-                if (currnetNeedResourceAmount >= needResourceAmount)
+            }
+            if (currnetNeedResourceAmount >= needResourceAmount)
+            {
+                Cook();
+                for (int i = 0; i < resources.Count; i++)
                 {
-                    Cook();
-                    for (int i = 0; i < resources.Count; i++)
-                    {
-                        resources[i].sprite = sprites[i];
-                        currnetNeedResourceAmount = 0;
-                        currentNeedResource = new List<FoodKind>(needResource); ;
-                    }
+                    resources[i].sprite = sprites[i];
+                    currnetNeedResourceAmount = 0;
+                    currentNeedResource = new List<FoodKind>(needResource); ;
                 }
-                yield return new WaitForSeconds(0.02f);
-                isPocus = false;
             }
         }
     }

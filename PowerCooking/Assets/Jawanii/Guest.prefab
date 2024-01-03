@@ -122,10 +122,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orderObject: {fileID: 6544835072008880209}
+  time: 0
   maxOrderAmount: 3
   foodKinds: 
   orders: []
   canInteraction: 0
+  currentGuestState: 0
+  Fillng_Object: {fileID: 0}
 --- !u!54 &7317835655230803247
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -166,7 +169,7 @@ GameObject:
   - component: {fileID: 3304107402326979942}
   - component: {fileID: 1180970830598982282}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Guest Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,8 +209,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.1, z: 8}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.5, y: 0.1, z: 2}
+  m_Center: {x: 0, y: 0, z: -1.5}
 --- !u!54 &3304107402326979942
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -272,14 +275,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6544835072008880209}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.27059805, y: 0.6532815, z: 0.27059805, w: 0.6532815}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.6, y: 0.3, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2046338707894554920}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -45, y: 90, z: 0}
 --- !u!212 &5425058518711458413
 SpriteRenderer:
   m_ObjectHideFlags: 0

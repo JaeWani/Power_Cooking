@@ -742,7 +742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCanvas: {fileID: 610646517}
   keyCanvas: {fileID: 610646517}
-  playerinteraction: {fileID: 2043026878}
+  playerinteraction: {fileID: 2043026884}
 --- !u!4 &2038481752
 Transform:
   m_ObjectHideFlags: 0
@@ -934,7 +934,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 318070552224126425, guid: b370a7a203852794ba2be5ce1de56b66,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2043026877}
+      addedObject: {fileID: 2043026884}
   m_SourcePrefab: {fileID: 100100000, guid: b370a7a203852794ba2be5ce1de56b66, type: 3}
 --- !u!1 &2043026875 stripped
 GameObject:
@@ -964,7 +964,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2043026877
+--- !u!114 &2043026884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -973,25 +973,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2043026875}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca82c8bf755e5214fb3be2b289bd408f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickEffect: {fileID: 0}
-  clickableLayers:
-    serializedVersion: 2
-    m_Bits: 64
---- !u!114 &2043026878 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3379394481292892925, guid: b370a7a203852794ba2be5ce1de56b66,
-    type: 3}
-  m_PrefabInstance: {fileID: 2043026874}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043026875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3617bb2de85b574439f042ef3ca32f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentFood: 0
 --- !u!1001 &2089505484
 PrefabInstance:
   m_ObjectHideFlags: 0

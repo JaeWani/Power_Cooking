@@ -7,6 +7,8 @@ public class Shop : MonoBehaviour
     public FoodKind foodKind;
     [SerializeField] private GameObject foodPrefab; 
 
+    public bool isTurn = false;
+
 
     public int price;
     public bool canBuy;
@@ -27,6 +29,7 @@ public class Shop : MonoBehaviour
                   var player = GameManager.instance.playerinteraction;
                     player.AddFood(foodKind);
                     var food = Instantiate(foodPrefab, player.transform);
+                    if(isTurn) food.transform.rotation = Quaternion.Euler(0,0,90);
                     food.transform.localPosition = new Vector3(0, 1, 0);
                     player.foodObject = food;
                 }

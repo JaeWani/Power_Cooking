@@ -6,8 +6,15 @@ public enum FoodKind
 {
     Null,
     Stew,
-    Bread
-
+    Bread,
+    Carrot,
+    Cheese,
+    Ham,
+    Lettuce,
+    Onion,
+    Potato,
+    Steak,
+    Tomato,
 }
 public class Food : MonoBehaviour
 {

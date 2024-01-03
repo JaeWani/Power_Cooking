@@ -57,8 +57,9 @@ public class Cooking_Pot : MonoBehaviour
         else isPlayer = false;
     }
 
-    protected virtual void OnMouseDown()
+    private void OnMouseDown()
     {
+        Debug.Log("Asd");
         Cook();
     }
 
@@ -66,10 +67,13 @@ public class Cooking_Pot : MonoBehaviour
     {
         if (isPlayer)
         {
+            Debug.Log("1");
             if (!isPlaying)
             {
+                Debug.Log("2");
                 if (GameManager.instance.playerinteraction.currentFood == FoodKind.Null)
                 {
+                    Debug.Log("3");
                     switch (currentType)
                     {
                         case Pot_Type.Input: KeyInput(); break;

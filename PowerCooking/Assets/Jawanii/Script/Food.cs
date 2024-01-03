@@ -17,6 +17,7 @@ public enum FoodKind
     Meat,
     Stew,
     HamBuger,
+    Cooked_Meat
 }
 public class Food : MonoBehaviour
 {

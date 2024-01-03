@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ae7492d17eba73a4bbeb016bae443a7b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ae7492d17eba73a4bbeb016bae443a7b,
         type: 3}
@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ae7492d17eba73a4bbeb016bae443a7b,
         type: 3}
       propertyPath: m_Name
-      value: Floor Variant
+      value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ae7492d17eba73a4bbeb016bae443a7b,
         type: 3}

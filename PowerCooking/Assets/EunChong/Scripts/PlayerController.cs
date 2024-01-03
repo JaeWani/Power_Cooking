@@ -34,10 +34,17 @@ public class PlayerController : MonoBehaviour
     void ClickToMove()
     {
         RaycastHit hit;
+
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, clickableLayers)) 
         {
-            agent.destination = hit.point;
-            if(clickEffect != null)
+            this.agent.ResetPath();
+            this.agent.isStopped = false;
+            this.agent.updatePosition = true;
+            this.agent.updateRotation = true;
+
+            agent.SetDestination(hit.point);
+
+            if (clickEffect != null) 
             {
                 Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
             }
@@ -52,5 +59,16 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         input.Disable();
+    }
+
+    private void Update()
+    {
+        if (agent.transform.position == agent.destination)
+        {
+            this.agent.isStopped = true;
+            this.agent.updatePosition = false;
+            this.agent.updateRotation = false;
+            this.agent.velocity = Vector3.zero;
+        }
     }
 }

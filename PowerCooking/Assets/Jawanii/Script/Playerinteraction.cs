@@ -5,6 +5,7 @@ using UnityEngine;
 public class Playerinteraction : MonoBehaviour
 {
     public FoodKind currentFood = FoodKind.Null;
+    public GameObject foodObject = null;
 
     public void AddFood(FoodKind foodKind) => currentFood = foodKind;
     public void DropFood() => currentFood = FoodKind.Null;

@@ -11,12 +11,16 @@ public class Guest : MonoBehaviour
     public List<FoodKind> foodKinds;
     public List<GameObject> orders;
 
-  
-
+    public bool canInteraction = false;
 
     void Start()
     {
         RandomOrder();
+    }
+
+    private void OnMouseDown()
+    {
+        Interaction();
     }
 
     private void RandomOrder()
@@ -36,9 +40,27 @@ public class Guest : MonoBehaviour
             obj.sprite = GameManager.instance.foodSprites[(int)foodKinds[i]];
             obj.transform.SetParent(orderObject.transform);
             obj.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-            obj.transform.localPosition = new Vector3(x,0.3f,0);
+            obj.transform.localPosition = new Vector3(x, 0.3f, 0);
             x++;
         }
         orders = order;
+    }
+    public void Interaction()
+    {
+        if(canInteraction){
+        for(int i = 0; i < foodKinds.Count; i++)
+        {
+            if(GameManager.instance.playerinteraction.currentFood == foodKinds[i])
+            {
+                Debug.Log("어익호난");
+                Destroy(orders[i]);
+                GameManager.instance.playerinteraction.currentFood = FoodKind.Null;
+                Destroy(GameManager.instance.playerinteraction.foodObject);
+                foodKinds[i] = FoodKind.Null;
+                break;
+            }
+            else Debug.Log("엄");
+        }
+        }
     }
 }

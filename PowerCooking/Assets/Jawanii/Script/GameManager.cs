@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region  Variable
     public static GameManager instance;
 
     public Canvas mainCanvas;
@@ -13,6 +14,12 @@ public class GameManager : MonoBehaviour
     public Playerinteraction playerinteraction;
 
     public List<Sprite> foodSprites = new List<Sprite>();
+
+    [Header("In Game")]
+    public int inGameGold;
+    public int score;
+    #endregion
+
 
     private void Awake()
     {

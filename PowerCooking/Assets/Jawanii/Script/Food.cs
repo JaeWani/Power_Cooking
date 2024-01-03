@@ -5,7 +5,8 @@ using UnityEngine;
 public enum FoodKind
 {
     Null,
-    Stew
+    Stew,
+    Bread
 
 }
 public class Food : MonoBehaviour

@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public Canvas mainCanvas;
     public Canvas keyCanvas;
 
+    public Playerinteraction playerinteraction;
+
     private void Awake()
     {
         if (instance == null) instance = this;

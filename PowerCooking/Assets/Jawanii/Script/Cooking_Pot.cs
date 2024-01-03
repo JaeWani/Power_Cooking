@@ -60,7 +60,7 @@ public class Cooking_Pot : MonoBehaviour
         else isPlayer = false;
     }
 
-    private void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
         Cook();
     }
@@ -139,6 +139,7 @@ public class Cooking_Pot : MonoBehaviour
                 player.AddFood(currentKind);
                 var food = Instantiate(foodPrefab, player.transform);
                 food.transform.localPosition = new Vector3(0, 1, 0);
+                player.foodObject = food;
             }
             isPlaying = false;
         }
@@ -163,6 +164,7 @@ public class Cooking_Pot : MonoBehaviour
                     player.AddFood(currentKind);
                     var food = Instantiate(foodPrefab, player.transform);
                     food.transform.localPosition = new Vector3(0, 1, 0);
+                    player.foodObject = food;
                     break;
                 }
             }

@@ -9,18 +9,15 @@ public class Cooking_Pot : MonoBehaviour
     #region  Variable;
 
     [SerializeField] protected GameObject foodPrefab;
+    public GameObject resourceObject;
 
     public FoodKind currentKind;
-
-    public float coolTime = 0;
-
-    private float curCoolTime = 0;
-
-    private bool canCook;
 
     public bool isPlayer;
     public bool isPlaying;
 
+    public List<FoodKind> needResource = new List<FoodKind>();
+    public List<SpriteRenderer> resources = new List<SpriteRenderer>();
 
     [SerializeField] private RaycastHit raycastHit;
     private float maxDistance = 3;
@@ -172,6 +169,21 @@ public class Cooking_Pot : MonoBehaviour
             isPlaying = false;
         }
     }
+    public void AddResource(FoodKind foodKind)
+    {
+        if (foodKind == FoodKind.Null) 
+        { 
+            
+        }
+        else
+        {
+            foreach (var item in needResource)
+            {
+                if (item == foodKind) { }
+            }
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

@@ -5,7 +5,6 @@ using UnityEngine;
 public enum FoodKind
 {
     Null,
-    Stew,
     Bread,
     Carrot,
     Cheese,
@@ -15,6 +14,9 @@ public enum FoodKind
     Potato,
     Steak,
     Tomato,
+    Meat,
+    Stew,
+    HamBuger,
 }
 public class Food : MonoBehaviour
 {

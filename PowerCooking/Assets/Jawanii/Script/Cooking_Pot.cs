@@ -60,7 +60,7 @@ public class Cooking_Pot : MonoBehaviour
         else isPlayer = false;
     }
 
-    private void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
         Cook();
     }

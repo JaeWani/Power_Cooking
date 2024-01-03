@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public Playerinteraction playerinteraction;
 
+    public List<Sprite> foodSprites = new List<Sprite>();
+
     private void Awake()
     {
         if (instance == null) instance = this;

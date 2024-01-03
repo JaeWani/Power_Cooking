@@ -4,55 +4,35 @@ using UnityEngine;
 
 public class GuestManager : MonoBehaviour
 {
-    [SerializeField] GameObject guest;
-    [SerializeField] Transform[] spawnPoints; 
-    [SerializeField] Transform[] firstLinePoints; 
-    [SerializeField] Transform[] secondLinePoints; 
-    [SerializeField] Transform[] thirdLinePoints; 
+    public List<Vector3> ticketQueuePos = new List<Vector3>();
+    public List<GameObject> npcInQueue = new List<GameObject>();
 
-    [SerializeField] int guestAppearanceTime;
-    int currentGuestAppearanceTime;
-    int currentGuestLineUpOrder;
-
-    public void AddGuest(Transform point, Transform[] points)
+    void Start()
     {
-        GameObject obj = Instantiate(guest, point.position, Quaternion.identity);
-        //obj.GetComponent<GuestMovement>().Init(points);
-    }
+        // yes, I should use a for cicle, but the positions in reality would be different :)
+        ticketQueuePos.Add(new Vector3(8, 0, 0));
+        ticketQueuePos.Add(new Vector3(10, 0, 0));
+        ticketQueuePos.Add(new Vector3(12, 0, 0));
+        ticketQueuePos.Add(new Vector3(14, 0, 0));
+        ticketQueuePos.Add(new Vector3(16, 0, 0));
 
-    public void SendGuest()
-    {
-        //string cmd = guests.Dequeue();
-        //Debug.Log(cmd);
-    }
-
-    private void Start()
-    {
-        StartCoroutine(manageRrestaurant());
-    }
-
-    IEnumerator manageRrestaurant()
-    {
-        while (true)
+        for (int i = 0; i < 5; i++)
         {
-            currentGuestAppearanceTime = Random.Range(1, guestAppearanceTime + 1);
-            Debug.Log("currentGuestAppearanceTime : " + currentGuestAppearanceTime);
-            yield return new WaitForSeconds(currentGuestAppearanceTime);
-            currentGuestLineUpOrder = Random.Range(0, spawnPoints.Length);
-            Debug.Log("currentGuestLineUpOrder : " + currentGuestLineUpOrder);
+            Instantiate(npcInQueue[i], ticketQueuePos[i], transform.rotation);
+        }
+    }
 
-            switch(currentGuestLineUpOrder)
-            {
-                case 0 :
-                    AddGuest(spawnPoints[currentGuestLineUpOrder], firstLinePoints);
-                    break;
-                case 1 :
-                    AddGuest(spawnPoints[currentGuestLineUpOrder], secondLinePoints);
-                    break;
-                case 2 :
-                    AddGuest(spawnPoints[currentGuestLineUpOrder], thirdLinePoints);
-                    break;
-            }
+    public void TicketAcquistato()
+    {
+        if (npcInQueue.Count != 0)
+        {
+            npcInQueue.RemoveAt(0);
+        }
+
+        for (int i = 0; i < npcInQueue.Count; i++)
+        {
+
+            npcInQueue[i].transform.position = ticketQueuePos[i]; //not working
         }
     }
 }

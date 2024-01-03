@@ -16,10 +16,12 @@ public class Cooking_Pot : MonoBehaviour
     public bool isPlayer;
     public bool isPlaying;
     public bool isSatisfaction = false;
+    public bool isPocus = false;
 
     public int needResourceAmount = 0;
     public int currnetNeedResourceAmount = 0;
     public List<FoodKind> needResource = new List<FoodKind>();
+    public List<FoodKind> currentNeedResource = new List<FoodKind>();
     public List<SpriteRenderer> resources = new List<SpriteRenderer>();
     public List<Sprite> sprites = new List<Sprite>();
 
@@ -49,40 +51,26 @@ public class Cooking_Pot : MonoBehaviour
     {
         needResourceAmount = needResource.Count;
         resourceObject.SetActive(false);
+        currentNeedResource = new List<FoodKind>(needResource);
     }
-    private void Update()
-    {
-        if (Physics.BoxCast(transform.position, transform.lossyScale * 3, transform.forward, out raycastHit, transform.rotation, maxDistance))
-        {
-            if (raycastHit.transform.CompareTag("Player"))
-            {
-                isPlayer = true;
-            }
-        }
-        else isPlayer = false;
-    }
+
 
     private void OnMouseDown()
     {
-        CheckFood();
+        if (!isPocus) CheckFood();
     }
 
     protected virtual void Cook()
     {
-        if (isPlayer)
+
+        if (!isPlaying)
         {
-            Debug.Log("1");
-            if (!isPlaying)
+            if (GameManager.instance.playerinteraction.currentFood == FoodKind.Null)
             {
-                Debug.Log("2");
-                if (GameManager.instance.playerinteraction.currentFood == FoodKind.Null)
+                switch (currentType)
                 {
-                    Debug.Log("3");
-                    switch (currentType)
-                    {
-                        case Pot_Type.Input: KeyInput(); break;
-                        case Pot_Type.Beat: KeyBeat(); break;
-                    }
+                    case Pot_Type.Input: KeyInput(); break;
+                    case Pot_Type.Beat: KeyBeat(); break;
                 }
             }
         }
@@ -149,10 +137,13 @@ public class Cooking_Pot : MonoBehaviour
     }
     protected void KeyBeat()
     {
+
         isPlaying = true;
         StartCoroutine(func());
         IEnumerator func()
         {
+            var p = GameManager.instance.playerinteraction;
+            p.isInteraction = true;
             var obj = Instantiate(beatPrefab, transform.position + Vector3.up * 2, Quaternion.identity).GetComponent<TextMesh>();
             int count = beatAmount;
             while (true)
@@ -172,43 +163,59 @@ public class Cooking_Pot : MonoBehaviour
                 }
             }
             Destroy(obj.gameObject);
+            p.isInteraction = false;
             isPlaying = false;
         }
     }
 
     private void CheckFood()
     {
-        Debug.Log("2");
-        var player = GameManager.instance.playerinteraction;
-        if (player.currentFood == FoodKind.Null)
+        StartCoroutine(a());
+        IEnumerator a()
         {
-            if (resourceObject.active) resourceObject.SetActive(false);
-            else resourceObject.SetActive(true);
-        }
-        else
-        {
-            resourceObject.SetActive(true);
-            for (int i = 0; i < needResource.Count; i++)
+            if (isPlayer)
             {
-                Debug.Log(player.currentFood.ToString());
-                if (player.currentFood == needResource[i])
+                isPocus = true;
+                var player = GameManager.instance.playerinteraction;
+                if (player.currentFood == FoodKind.Null)
                 {
-                    resources[i].sprite = GameManager.instance.checkSprite;
-                    needResource[i] = FoodKind.Null;
-                    currnetNeedResourceAmount++;
+                    if (resourceObject.active) resourceObject.SetActive(false);
+                    else resourceObject.SetActive(true);
                 }
-                else continue;
-            }
-            if (currnetNeedResourceAmount == needResourceAmount)
-            {
-                Cook();
-                for (int i = 0; i < resources.Count; i++)
+                else
                 {
-                    currnetNeedResourceAmount = 0;
-                    resources[i].sprite = sprites[i];
+                    resourceObject.SetActive(true);
+                    for (int i = 0; i < currentNeedResource.Count; i++)
+                    {
+                        if (player.currentFood == currentNeedResource[i])
+                        {
+                            player.currentFood = FoodKind.Null;
+                            Destroy(player.foodObject);
+
+
+                            resources[i].sprite = GameManager.instance.checkSprite;
+                            currentNeedResource[i] = FoodKind.Null;
+
+                            currnetNeedResourceAmount++;
+                            Debug.Log(currnetNeedResourceAmount);
+                            break;
+                        }
+                        else continue;
+                    }
                 }
+                if (currnetNeedResourceAmount >= needResourceAmount)
+                {
+                    Cook();
+                    for (int i = 0; i < resources.Count; i++)
+                    {
+                        resources[i].sprite = sprites[i];
+                        currnetNeedResourceAmount = 0;
+                        currentNeedResource = new List<FoodKind>(needResource); ;
+                    }
+                }
+                yield return new WaitForSeconds(0.02f);
+                isPocus = false;
             }
         }
     }
-
 }

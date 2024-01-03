@@ -146,7 +146,7 @@ public class Cooking_Pot : MonoBehaviour
         StartCoroutine(func());
         IEnumerator func()
         {
-            var obj = Instantiate(beatPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity).GetComponent<TextMesh>();
+            var obj = Instantiate(beatPrefab, transform.position + Vector3.up * 2, Quaternion.identity).GetComponent<TextMesh>();
             int count = beatAmount;
             while (true)
             {

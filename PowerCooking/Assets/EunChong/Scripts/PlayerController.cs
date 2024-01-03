@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,10 +14,18 @@ public class PlayerController : MonoBehaviour
 
     NavMeshAgent agent;
     Animator animator;
+    string lookPosName;
+    Vector3 stopPointPos;
+    Vector3 kitchenAppliancePos;
 
     [Header("Movement")]
     [SerializeField] ParticleSystem clickEffect;
-    [SerializeField] LayerMask clickableLayers;
+    [SerializeField] LayerMask moveLayer;
+    [SerializeField] float lookRotationSpeed;
+
+    [Header("PrepareCook")]
+    [SerializeField] LayerMask prepareCookLayer;
+    [SerializeField] float checkRange;
 
     private void Awake()
     {
@@ -29,13 +39,14 @@ public class PlayerController : MonoBehaviour
     void AssignInput()
     {
         input.Main.Move.performed += ctx => ClickToMove();
+        input.Main.PrepareCook.performed += ctx => ClickToPrepareCook();
     }
 
     void ClickToMove()
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, clickableLayers)) 
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, moveLayer)) 
         {
             this.agent.ResetPath();
             this.agent.isStopped = false;
@@ -44,9 +55,34 @@ public class PlayerController : MonoBehaviour
 
             agent.SetDestination(hit.point);
 
+            lookPosName = "Floor";
+            stopPointPos = hit.point;
+
             if (clickEffect != null) 
             {
                 Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
+            }
+        }
+    }
+
+    void ClickToPrepareCook()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, prepareCookLayer))
+        {
+            if (Vector3.Distance(hit.transform.GetComponent<KitchenAppliance>().stopPoint.position, transform.position) < checkRange)
+            {
+                this.agent.ResetPath();
+                this.agent.isStopped = false;
+                this.agent.updatePosition = true;
+                this.agent.updateRotation = true;
+
+                agent.SetDestination(hit.transform.GetComponent<KitchenAppliance>().stopPoint.position);
+
+                lookPosName = "KitchenAppliance";
+                stopPointPos = hit.transform.GetComponent<KitchenAppliance>().stopPoint.position;
+                kitchenAppliancePos = hit.transform.position;
             }
         }
     }
@@ -69,6 +105,20 @@ public class PlayerController : MonoBehaviour
             this.agent.updatePosition = false;
             this.agent.updateRotation = false;
             this.agent.velocity = Vector3.zero;
+        }
+
+        if (lookPosName == "Floor")
+        {
+            if (agent.velocity != Vector3.zero)
+            {
+                Vector3 direction = (stopPointPos - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
+            }
+        }
+        else if (lookPosName == "KitchenAppliance")
+        {
+            transform.LookAt(new Vector3(kitchenAppliancePos.x, transform.position.y, kitchenAppliancePos.z));
         }
     }
 }

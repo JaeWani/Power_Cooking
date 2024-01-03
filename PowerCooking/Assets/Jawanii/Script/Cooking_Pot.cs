@@ -71,10 +71,13 @@ public class Cooking_Pot : MonoBehaviour
         {
             if (!isPlaying)
             {
-                switch (currentType)
+                if (GameManager.instance.playerinteraction.currentFood == FoodKind.Null)
                 {
-                    case Pot_Type.Input: KeyInput(); break;
-                    case Pot_Type.Beat: KeyBeat(); break;
+                    switch (currentType)
+                    {
+                        case Pot_Type.Input: KeyInput(); break;
+                        case Pot_Type.Beat: KeyBeat(); break;
+                    }
                 }
             }
         }
@@ -92,7 +95,7 @@ public class Cooking_Pot : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
                 var obj = Instantiate(keyPrefab, GameManager.instance.keyCanvas.transform).GetComponent<KeyObject>();
                 obj.transform.position = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * 2
-                
+
                 );
                 while (true)
                 {

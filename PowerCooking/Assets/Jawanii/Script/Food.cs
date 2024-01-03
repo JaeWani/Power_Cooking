@@ -9,12 +9,7 @@ public enum FoodKind
     Carrot,
     Cheese,
     Ham,
-    Lettuce,
-    Onion,
-    Potato,
-    Steak,
     Tomato,
-    Meat,
     Stew,
     HamBuger,
     Cooked_Meat

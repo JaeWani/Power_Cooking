@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public Playerinteraction playerinteraction;
 
     public List<Sprite> foodSprites = new List<Sprite>();
+    public Sprite checkSprite;
 
     [Header("In Game")]
     public int inGameGold;

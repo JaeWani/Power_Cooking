@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         if (lookPosName == "Floor")
         {
-            if (agent.velocity != Vector3.zero)
+            if (agent.velocity != Vector3.zero && !GetComponent<Playerinteraction>().isInteraction)
             {
                 Vector3 direction = (stopPointPos - transform.position).normalized;
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
@@ -119,6 +119,15 @@ public class PlayerController : MonoBehaviour
         else if (lookPosName == "KitchenAppliance")
         {
             transform.LookAt(new Vector3(kitchenAppliancePos.x, transform.position.y, kitchenAppliancePos.z));
+        }
+
+        if (GetComponent<Playerinteraction>().isInteraction) 
+        {
+            agent.isStopped = true;
+        }
+        else
+        {
+            agent.isStopped = false;
         }
     }
 }

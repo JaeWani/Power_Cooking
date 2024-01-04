@@ -9,7 +9,7 @@ public class GuestManager : MonoBehaviour
     private Queue<Transform> playerQueue = new Queue<Transform>();
 
     // 플레이어의 프리팹 (큐에 추가할 대상)
-    public Transform playerPrefab;
+    public Transform[] playerPrefab;
 
     // 줄서기 포인트
     public Transform[] points;
@@ -38,7 +38,7 @@ public class GuestManager : MonoBehaviour
     {
         if (playerQueue.Count < points.Length)
         {
-            Transform newPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity);
+            Transform newPlayer = Instantiate(playerPrefab[Random.Range(0, playerPrefab.Length)], transform.position, Quaternion.identity);
             newPlayer.GetComponent<GuestMovement>().entrance = transform;
             playerQueue.Enqueue(newPlayer);
             UpdatePlayerPositions();

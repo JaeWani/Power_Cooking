@@ -34,6 +34,7 @@ public class GuestMovement : MonoBehaviour
 
     public IEnumerator Exit()
     {
+        transform.eulerAngles = new Vector3(0, 180, 0);
         yield return new WaitForSeconds(exitTime);
         Destroy(gameObject);
     }

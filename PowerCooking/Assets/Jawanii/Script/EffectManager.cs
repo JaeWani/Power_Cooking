@@ -50,5 +50,11 @@ public class EffectManager : MonoBehaviour
         return obj;
     }
     public static GameObject SpawnEffect(string key, Vector3 position, Transform parent) => instance._SpawnEffect(key,position,parent);
-
+    private GameObject _SpawnEffect(string key, Vector3 position, Vector3 scale)
+    {
+        var obj = Instantiate(EffectDictionary[key], position, Quaternion.identity);
+        obj.transform.localScale = scale;
+        return obj;
+    }
+    public static GameObject SpawnEffect(string key, Vector3 position, Vector3 scale) => instance._SpawnEffect(key,position,scale);
 }

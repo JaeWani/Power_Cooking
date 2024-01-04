@@ -53,7 +53,7 @@ public class Cooking_Pot : MonoBehaviour
     {
         if (foodView != null) foodView.SetActive(false);
         needResourceAmount = needResource.Count;
-        resourceObject.SetActive(false);
+        resourceObject.SetActive(true);
         currentNeedResource = new List<FoodKind>(needResource);
     }
 

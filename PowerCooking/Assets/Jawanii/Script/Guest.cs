@@ -106,7 +106,7 @@ public class Guest : MonoBehaviour
             {
                 Debug.Log("S");
                 filling.StopAllCoroutines();
-                GameManager.instance.Success(currentGuestState, upScore);
+                GameManager.instance.Success(currentGuestState, upScore,transform.position + Vector3.up * 1.5f);
             }
 
         }

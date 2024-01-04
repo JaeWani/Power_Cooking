@@ -41,14 +41,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int playerHp = 3;
     public int PlayerHP
     {
-        get{ return playerHp;}
+        get { return playerHp; }
         set
         {
             playerHp = value;
-            
-            if(playerHp == 2) Shake_HP(Hp_Img[0]);
-            if(playerHp == 1) Shake_HP(Hp_Img[1]);
-            if(playerHp == 0) Shake_HP(Hp_Img[2]);
+
+            if (playerHp == 2) Shake_HP(Hp_Img[0]);
+            if (playerHp == 1) Shake_HP(Hp_Img[1]);
+            if (playerHp == 0) Shake_HP(Hp_Img[2]);
         }
     }
     public int inGameGold;
@@ -83,12 +83,20 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T)) PlayerHP--;
+        if (Input.GetKeyDown(KeyCode.T)) PlayerHP--;
         scoreText.text = score.ToString();
 
     }
-    public void Success(GuestState guestState, float upScore)
+    public void Success(GuestState guestState, float upScore, Vector3 position)
     {
+        switch (guestState)
+        {
+            case GuestState.VeryGood: EffectManager.SpawnEffect("Very_Good", position, new Vector3(0.4f, 0.4f, 0.4f)); break;
+            case GuestState.Good: EffectManager.SpawnEffect("Good", position, new Vector3(0.4f, 0.4f, 0.4f)); break;
+            case GuestState.Normal: EffectManager.SpawnEffect("SoSo", position, new Vector3(0.4f, 0.4f, 0.4f)); break;
+            case GuestState.Bad: EffectManager.SpawnEffect("Bad", position, new Vector3(0.4f, 0.4f, 0.4f)); break;
+            case GuestState.VeryBad: EffectManager.SpawnEffect("Terrible", position, new Vector3(0.4f, 0.4f, 0.4f)); break;
+        }
         GuestManager.instance.DequeuePlayer();
         int scr = Mathf.RoundToInt(upScore / ((int)guestState + 1));
         score += scr;
@@ -111,14 +119,14 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator RoundStart(Round round)
     {
-        roundRect.DOAnchorPos(new Vector2(-2000, 100),0);
+        roundRect.DOAnchorPos(new Vector2(-2000, 100), 0);
 
         string difficulty = "";
         roundText.text = "Round " + currentRoundIndex;
-        switch(round.currentDifficulty)
+        switch (round.currentDifficulty)
         {
-            case Round.Difficulty.veryEasy : difficulty = "Very Easy"; break;
-            case Round.Difficulty.easy : difficulty = "Easy"; break;
+            case Round.Difficulty.veryEasy: difficulty = "Very Easy"; break;
+            case Round.Difficulty.easy: difficulty = "Easy"; break;
             case Round.Difficulty.normal: difficulty = "normal"; break;
             case Round.Difficulty.hard: difficulty = "Hard"; break;
             case Round.Difficulty.veryHard: difficulty = "Very Hard"; break;
@@ -126,14 +134,14 @@ public class GameManager : MonoBehaviour
         difficultyText.text = "Difficulty : " + difficulty;
         guestText.text = "Customer : " + round.roundGuestAmount;
 
-        roundRect.DOAnchorPos(new Vector2(0, 100),0.5f).SetEase(Ease.OutQuad);
+        roundRect.DOAnchorPos(new Vector2(0, 100), 0.5f).SetEase(Ease.OutQuad);
         yield return new WaitForSeconds(3);
-        roundRect.DOAnchorPos(new Vector2(2000, 100),0.5f).SetEase(Ease.OutQuad);
+        roundRect.DOAnchorPos(new Vector2(2000, 100), 0.5f).SetEase(Ease.OutQuad);
 
 
         float time = 50 - (int)round.currentDifficulty * 5;
         currentRoundGuestAmount = 0;
-        
+
         for (int i = 0; i < round.roundGuestAmount; i++)
         {
             currentRoundGuestAmount++;
@@ -148,7 +156,7 @@ public class GameManager : MonoBehaviour
     }
     private void Shake_HP(Image image)
     {
-        image.rectTransform.DOShakeAnchorPos(1,30,10,90,false).OnComplete(() => image.gameObject.SetActive(false));
+        image.rectTransform.DOShakeAnchorPos(1, 30, 10, 90, false).OnComplete(() => image.gameObject.SetActive(false));
     }
-    
+
 }

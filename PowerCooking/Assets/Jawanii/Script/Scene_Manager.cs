@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Scene_Manager : MonoBehaviour
 {
+    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject panel;
+    [SerializeField] GameObject back;
+
     public static Scene_Manager instance;
 
     private void Awake()
@@ -17,12 +21,41 @@ public class Scene_Manager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    void Start()
+    private void Update()
     {
+        if (panel.activeSelf) 
+        {
+            back.SetActive(true);
+        }
+        else
+        {
+            back.SetActive(false);
+        }
     }
 
-    void Update()
+    public void StartGame()
     {
-        if(Input.GetKeyDown(KeyCode.A)) Transitioner.Instance.TransitionToScene("asd");
+        canvas.SetActive(false);
+        Transitioner.Instance.TransitionToScene("asd");
+    }
+
+    public void ShowRanking()
+    {
+        // 다른 씬으로 이동
+    }
+
+    public void ShowRule()
+    {
+        panel.SetActive(true);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void Back()
+    {
+        panel.SetActive(false);
     }
 }

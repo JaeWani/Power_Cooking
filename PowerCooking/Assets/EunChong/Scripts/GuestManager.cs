@@ -40,35 +40,42 @@ public class GuestManager : MonoBehaviour
         }
     }
 
-    // 큐에 플레이어 추가
+    /// <summary>
+    /// 큐에 플레이어 추가
+    /// </summary>
     void EnqueuePlayer()
     {
         if (playerQueue.Count < points.Length) 
         {
             Transform newPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity);
+            newPlayer.GetComponent<GuestMovement>().entrance = transform;
             playerQueue.Enqueue(newPlayer);
             UpdatePlayerPositions();
         }
     }
 
-    // 큐에서 플레이어 제거
+    /// <summary>
+    /// 큐에서 플레이어 제거
+    /// </summary>
     void DequeuePlayer()
     {
         if (playerQueue.Count > 0)
         {
             Transform dequeuedPlayer = playerQueue.Dequeue();
-            Destroy(dequeuedPlayer.gameObject);
+            dequeuedPlayer.GetComponent<GuestMovement>().isFinished = true;
+            StartCoroutine(dequeuedPlayer.GetComponent<GuestMovement>().Exit());
             UpdatePlayerPositions();
         }
     }
 
-    // 플레이어들의 위치를 업데이트
+    /// <summary>
+    /// 플레이어들의 위치를 업데이트
+    /// </summary>
     void UpdatePlayerPositions()
     {
         int positionIndex = 0;
         foreach (Transform player in playerQueue)
         {
-            //player.position = points[positionIndex].position;
             player.GetComponent<GuestMovement>().currentIndex = positionIndex;
             positionIndex++;
         }

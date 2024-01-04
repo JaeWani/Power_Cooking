@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9331,7 +9331,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 30
+  field of view: 22.7
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -9357,7 +9357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 4, y: 13, z: -12}
+  m_LocalPosition: {x: 2, y: 13, z: -12.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15193,6 +15193,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1752457635}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &567378959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 567378960}
+  - component: {fileID: 567378961}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &567378960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567378959}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1061149301}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &567378961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567378959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698ef8b04b479e04cbb4538d347a9aa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - audioClip: {fileID: 8300000, guid: 97d0e08391df4a94db0c2d02a39d9304, type: 3}
+    key: Key
 --- !u!1001 &567423679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27790,6 +27837,7 @@ Transform:
   m_Children:
   - {fileID: 2038481752}
   - {fileID: 967771079}
+  - {fileID: 567378960}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51162,8 +51210,8 @@ MonoBehaviour:
   foodSprites:
   - {fileID: 0}
   - {fileID: 21300000, guid: f6b8b2e1f39dfe3439ea02b919cfabcd, type: 3}
-  - {fileID: 21300000, guid: 6d573bc7e7ad38b46bdd445a85aba24d, type: 3}
   - {fileID: 21300000, guid: 3d42cf37bc566974e959e5bca07de040, type: 3}
+  - {fileID: 21300000, guid: 6d573bc7e7ad38b46bdd445a85aba24d, type: 3}
   checkSprite: {fileID: 21300000, guid: aca86e455c2e6e3478123003261bf64c, type: 3}
   playerHp: 3
   inGameGold: 100
@@ -55422,7 +55470,7 @@ PrefabInstance:
     - target: {fileID: 7544130417105839925, guid: 13d33fa47cd691342a311026fc9bc988,
         type: 3}
       propertyPath: currentKind
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7544130417105839925, guid: 13d33fa47cd691342a311026fc9bc988,
         type: 3}
@@ -55468,7 +55516,7 @@ PrefabInstance:
     - target: {fileID: 8129469457363676046, guid: 13d33fa47cd691342a311026fc9bc988,
         type: 3}
       propertyPath: currentKind
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8129469457363676046, guid: 13d33fa47cd691342a311026fc9bc988,
         type: 3}

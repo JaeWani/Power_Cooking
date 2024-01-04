@@ -11,8 +11,8 @@ public enum FoodKind
     Ham = 7,
     Tomato = 8,
     Stew = 1,
-    HamBuger = 2,
-    Cooked_Meat = 3
+    Cooked_Meat = 2,
+    HamBuger = 3
 }
 public class Food : MonoBehaviour
 {

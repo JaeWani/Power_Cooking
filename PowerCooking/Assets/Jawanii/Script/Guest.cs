@@ -29,16 +29,26 @@ public class Guest : MonoBehaviour
     public GuestState currentGuestState = GuestState.VeryGood;
 
     public GameObject Fillng_Object;
-    private Filling_UI filling;
+    public Filling_UI filling;
+    public bool isFilling = false;
+
+    public float upScore = 0;
 
     void Start()
     {
+        orderObject.SetActive(false);
+    }
+    public void Init()
+    {
+        orderObject.SetActive(true);
         RandomOrder();
         filling = Instantiate(Fillng_Object, GameManager.instance.keyCanvas.transform).GetComponent<Filling_UI>();
+        filling.transform.position = Camera.main.WorldToScreenPoint(orderObject.transform.position + Vector3.up);
         filling.guest = this;
         filling.StartBar(time);
-    }
+        isFilling = true;
 
+    }
     private void OnMouseDown()
     {
         Interaction();
@@ -57,6 +67,7 @@ public class Guest : MonoBehaviour
         {
             var kind = Random.Range(1, 4);
             foodKinds[i] = (FoodKind)kind;
+            upScore += 75 * kind;
         }
         int x = -1;
         for (int i = 0; i < foodKinds.Count; i++)
@@ -91,6 +102,7 @@ public class Guest : MonoBehaviour
             {
                 Debug.Log("S");
                 filling.StopAllCoroutines();
+                GameManager.instance.Success(currentGuestState,upScore);
             }
 
         }

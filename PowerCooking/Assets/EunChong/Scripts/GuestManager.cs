@@ -23,6 +23,7 @@ public class GuestManager : MonoBehaviour
             //이 클래스 인스턴스가 탄생했을 때 전역변수 instance에 게임매니저 인스턴스가 담겨있지 않다면, 자신을 넣어준다.
             instance = this;
         }
+        else Destroy(gameObject);
     }
 
     void Update()
@@ -43,9 +44,9 @@ public class GuestManager : MonoBehaviour
     /// <summary>
     /// 큐에 플레이어 추가
     /// </summary>
-    void EnqueuePlayer()
+    public void EnqueuePlayer()
     {
-        if (playerQueue.Count < points.Length) 
+        if (playerQueue.Count < points.Length)
         {
             Transform newPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity);
             newPlayer.GetComponent<GuestMovement>().entrance = transform;
@@ -57,13 +58,15 @@ public class GuestManager : MonoBehaviour
     /// <summary>
     /// 큐에서 플레이어 제거
     /// </summary>
-    void DequeuePlayer()
+    public void DequeuePlayer()
     {
         if (playerQueue.Count > 0)
         {
             Transform dequeuedPlayer = playerQueue.Dequeue();
-            dequeuedPlayer.GetComponent<GuestMovement>().isFinished = true;
-            StartCoroutine(dequeuedPlayer.GetComponent<GuestMovement>().Exit());
+            var guestMovement = dequeuedPlayer.GetComponent<GuestMovement>();
+            guestMovement.isFinished = true;
+            Destroy(guestMovement.guest.filling.gameObject);
+            StartCoroutine(guestMovement.Exit());
             UpdatePlayerPositions();
         }
     }

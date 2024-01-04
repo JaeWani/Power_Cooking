@@ -38,4 +38,16 @@ public class GameManager : MonoBehaviour
     {
 
     }
+
+    public void Success(GuestState guestState, float upScore)
+    {
+        GuestManager.instance.DequeuePlayer();
+        int scr = Mathf.RoundToInt(upScore / ((int)guestState + 1));
+        score += scr;
+        Debug.Log(scr + "점 올랐습니다.");
+    }
+    public void Fail()
+    {
+
+    }
 }

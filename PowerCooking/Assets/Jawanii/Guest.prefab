@@ -131,7 +131,8 @@ MonoBehaviour:
   orders: []
   canInteraction: 0
   currentGuestState: 0
-  Fillng_Object: {fileID: 0}
+  Fillng_Object: {fileID: 4714666774394914312, guid: 31b93976231522249a360f8363f4b2c4,
+    type: 3}
 --- !u!114 &779665626186209036
 MonoBehaviour:
   m_ObjectHideFlags: 0

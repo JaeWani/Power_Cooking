@@ -10,6 +10,12 @@ public class GuestMovement : MonoBehaviour
     public Transform entrance;
     public int currentIndex;
     Transform target;
+    public Guest guest;
+
+    private void Start()
+    {
+        guest = GetComponent<Guest>();
+    }
 
     private void Update()
     {
@@ -23,6 +29,7 @@ public class GuestMovement : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
+        if (currentIndex == 0 && !guest.isFilling) guest.Init();
     }
 
     public IEnumerator Exit()

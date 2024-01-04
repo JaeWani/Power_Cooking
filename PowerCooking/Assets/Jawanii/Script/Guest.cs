@@ -88,21 +88,25 @@ public class Guest : MonoBehaviour
         {
             for (int i = 0; i < foodKinds.Count; i++)
             {
-                if (GameManager.instance.playerinteraction.currentFood == foodKinds[i])
+                if (GameManager.instance.playerinteraction.currentFood != FoodKind.Null)
                 {
-                    Destroy(orders[i]);
-                    GameManager.instance.playerinteraction.currentFood = FoodKind.Null;
-                    Destroy(GameManager.instance.playerinteraction.foodObject);
-                    foodKinds[i] = FoodKind.Null;
-                    currentOrderAmount++;
-                    break;
+                    if (GameManager.instance.playerinteraction.currentFood == foodKinds[i])
+                    {
+                        Destroy(orders[i]);
+                        GameManager.instance.playerinteraction.currentFood = FoodKind.Null;
+                        Destroy(GameManager.instance.playerinteraction.foodObject);
+                        foodKinds[i] = FoodKind.Null;
+                        currentOrderAmount++;
+                        Debug.Log("아이고난");
+                        break;
+                    }
                 }
             }
             if (currentOrderAmount == orderAmount)
             {
                 Debug.Log("S");
                 filling.StopAllCoroutines();
-                GameManager.instance.Success(currentGuestState,upScore);
+                GameManager.instance.Success(currentGuestState, upScore);
             }
 
         }

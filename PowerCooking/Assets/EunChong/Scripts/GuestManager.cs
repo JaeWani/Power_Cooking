@@ -28,17 +28,7 @@ public class GuestManager : MonoBehaviour
 
     void Update()
     {
-        // 키보드 입력 등을 통해 새로운 플레이어를 큐에 추가하는 예시
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            EnqueuePlayer();
-        }
-
-        // 큐에서 플레이어를 제거하는 예시
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            DequeuePlayer();
-        }
+      
     }
 
     /// <summary>

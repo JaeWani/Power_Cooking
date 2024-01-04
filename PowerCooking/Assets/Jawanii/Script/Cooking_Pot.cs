@@ -133,6 +133,7 @@ public class Cooking_Pot : MonoBehaviour
                 {
                     if (foodView != null) foodView.SetActive(false);
                     Destroy(EffectManager.SpawnEffect("Explosion", transform.position), 1);
+                    SoundManager.PlaySound("Explosion",0.5f);
                     break;
                 }
             }

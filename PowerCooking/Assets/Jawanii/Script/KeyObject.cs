@@ -26,7 +26,7 @@ public class KeyObject : MonoBehaviour
         switch (currentState)
         {
             case KeyState.W:
-                text.text = "w";
+                text.text = "W";
                 keyCode = KeyCode.W;
                 break;
             case KeyState.A:

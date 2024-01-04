@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
+using DG.Tweening;
 
 [System.Serializable]
 public class Round
@@ -36,9 +38,25 @@ public class GameManager : MonoBehaviour
     public Sprite checkSprite;
 
     [Header("In Game")]
-    public int playerHp = 3;
+    [SerializeField] private int playerHp = 3;
+    public int PlayerHP
+    {
+        get{ return playerHp;}
+        set
+        {
+            playerHp = value;
+            
+            if(playerHp == 2) Shake_HP(Hp_Img[0]);
+            if(playerHp == 1) Shake_HP(Hp_Img[1]);
+            if(playerHp == 0) Shake_HP(Hp_Img[2]);
+        }
+    }
     public int inGameGold;
     public int score;
+
+    [Header("UI")]
+    [SerializeField] private List<Image> Hp_Img;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     [Header("Guest")]
     public List<Round> rounds = new List<Round>();
@@ -60,7 +78,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.T)) PlayerHP--;
     }
     public void Success(GuestState guestState, float upScore)
     {
@@ -88,7 +106,7 @@ public class GameManager : MonoBehaviour
     {
         float time = 50 - (int)round.currentDifficulty * 5;
         currentRoundGuestAmount = 0;
-        for (int i = 0; i < round.roundGuestAmount ; i++)
+        for (int i = 0; i < round.roundGuestAmount; i++)
         {
             currentRoundGuestAmount++;
             yield return new WaitForSeconds(0.5f);
@@ -99,5 +117,9 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
+    }
+    private void Shake_HP(Image image)
+    {
+        image.rectTransform.DOShakeAnchorPos(1,30,10,90,false).OnComplete(() => image.gameObject.SetActive(false));
     }
 }

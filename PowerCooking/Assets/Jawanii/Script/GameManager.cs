@@ -58,6 +58,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Image> Hp_Img;
     [SerializeField] private TextMeshProUGUI scoreText;
 
+    [SerializeField] private RectTransform roundRect;
+    [SerializeField] private TextMeshProUGUI roundText;
+    [SerializeField] private TextMeshProUGUI difficultyText;
+    [SerializeField] private TextMeshProUGUI guestText;
+
     [Header("Guest")]
     public List<Round> rounds = new List<Round>();
     public int currentRoundIndex = 0;
@@ -79,6 +84,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.T)) PlayerHP--;
+        scoreText.text = score.ToString();
+
     }
     public void Success(GuestState guestState, float upScore)
     {
@@ -98,14 +105,35 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < rounds.Count; i++)
         {
             Debug.Log(i);
+            currentRoundIndex = i + 1;
             yield return StartCoroutine(RoundStart(rounds[i]));
-            yield return new WaitForSeconds(3);
         }
     }
     public IEnumerator RoundStart(Round round)
     {
+        roundRect.DOAnchorPos(new Vector2(-2000, 100),0);
+
+        string difficulty = "";
+        roundText.text = "Round " + currentRoundIndex;
+        switch(round.currentDifficulty)
+        {
+            case Round.Difficulty.veryEasy : difficulty = "Very Easy"; break;
+            case Round.Difficulty.easy : difficulty = "Easy"; break;
+            case Round.Difficulty.normal: difficulty = "normal"; break;
+            case Round.Difficulty.hard: difficulty = "Hard"; break;
+            case Round.Difficulty.veryHard: difficulty = "Very Hard"; break;
+        }
+        difficultyText.text = "Difficulty : " + difficulty;
+        guestText.text = "Customer : " + round.roundGuestAmount;
+
+        roundRect.DOAnchorPos(new Vector2(0, 100),0.5f).SetEase(Ease.OutQuad);
+        yield return new WaitForSeconds(3);
+        roundRect.DOAnchorPos(new Vector2(2000, 100),0.5f).SetEase(Ease.OutQuad);
+
+
         float time = 50 - (int)round.currentDifficulty * 5;
         currentRoundGuestAmount = 0;
+        
         for (int i = 0; i < round.roundGuestAmount; i++)
         {
             currentRoundGuestAmount++;
@@ -122,4 +150,5 @@ public class GameManager : MonoBehaviour
     {
         image.rectTransform.DOShakeAnchorPos(1,30,10,90,false).OnComplete(() => image.gameObject.SetActive(false));
     }
+    
 }

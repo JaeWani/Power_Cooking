@@ -130,6 +130,7 @@ public class Cooking_Pot : MonoBehaviour
                 if (fail > 0) 
                 {
                     if(foodView != null) foodView.SetActive(false);
+                    Destroy(EffectManager.SpawnEffect("Explosion", transform.position), 1);
                     break;
                 }
             }
@@ -156,7 +157,7 @@ public class Cooking_Pot : MonoBehaviour
             var p = GameManager.instance.playerinteraction;
             p.isInteraction = true;
             var obj = Instantiate(beatPrefab, transform).GetComponent<TextMesh>();
-            obj.transform.localPosition = new Vector3(1,3,0);
+            obj.transform.position = new Vector3(1,3,0);
             obj.transform.rotation = Quaternion.Euler(0,0,0);
             obj.transform.localScale = new Vector3(0.16f,0.16f,0.16f);
             int count = beatAmount;
@@ -166,7 +167,11 @@ public class Cooking_Pot : MonoBehaviour
             {
                 obj.text = count.ToString();
                 yield return null;
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) count--;
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) 
+                {
+                    count--;
+                    SoundManager.PlaySound("Key");
+                }
 
                 if (count <= 0)
                 {

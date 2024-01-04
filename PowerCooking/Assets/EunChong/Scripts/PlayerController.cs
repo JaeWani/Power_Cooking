@@ -107,18 +107,21 @@ public class PlayerController : MonoBehaviour
             this.agent.velocity = Vector3.zero;
         }
 
-        if (lookPosName == "Floor")
+        if (!GetComponent<Playerinteraction>().isInteraction)
         {
-            if (agent.velocity != Vector3.zero && !GetComponent<Playerinteraction>().isInteraction)
+            if (lookPosName == "Floor")
             {
-                Vector3 direction = (stopPointPos - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
+                if (agent.velocity != Vector3.zero)
+                {
+                    Vector3 direction = (stopPointPos - transform.position).normalized;
+                    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
+                }
             }
-        }
-        else if (lookPosName == "KitchenAppliance")
-        {
-            transform.LookAt(new Vector3(kitchenAppliancePos.x, transform.position.y, kitchenAppliancePos.z));
+            else if (lookPosName == "KitchenAppliance")
+            {
+                transform.LookAt(new Vector3(kitchenAppliancePos.x, transform.position.y, kitchenAppliancePos.z));
+            }
         }
 
         if (GetComponent<Playerinteraction>().isInteraction) 

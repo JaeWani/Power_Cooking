@@ -7,6 +7,8 @@ public class Sound
 {
     public AudioClip audioClip;
     public string key;
+    public bool isLoop;
+    
 }
 
 public class SoundManager : MonoBehaviour
@@ -33,11 +35,11 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private void _PlaySound(string key , float volume)
+    private void _PlaySound(string key , float volume, bool isLoop)
     {
         var obj = new GameObject("Audio Source");
         var audioSource = obj.AddComponent<AudioSource>();
-
+        audioSource.loop = true;
         StartCoroutine(play());
         IEnumerator play()
         {
@@ -49,6 +51,6 @@ public class SoundManager : MonoBehaviour
             Destroy(obj);
         }
     }
-    public static void PlaySound(string key, float volume) => soundManager._PlaySound(key, volume);
+    public static void PlaySound(string key, float volume, bool isLoop) => soundManager._PlaySound(key, volume,isLoop);
 
 }

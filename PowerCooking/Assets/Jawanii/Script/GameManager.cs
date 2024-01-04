@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(GameStart());
+        SoundManager.PlaySound("InGame_Background_Music", 0.8f,true);
     }
 
     void Update()
@@ -101,12 +102,14 @@ public class GameManager : MonoBehaviour
         int scr = Mathf.RoundToInt(upScore / ((int)guestState + 1));
         score += scr;
         currentRoundGuestAmount--;
+        SoundManager.PlaySound("Success", 1, false);
     }
     public void Fail()
     {
         playerHp--;
         currentRoundGuestAmount--;
         GuestManager.instance.DequeuePlayer();
+        SoundManager.PlaySound("Fail", 1,false);
     }
     public IEnumerator GameStart()
     {

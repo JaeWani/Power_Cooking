@@ -37,6 +37,7 @@ public class Guest : MonoBehaviour
     void Start()
     {
         orderObject.SetActive(false);
+        
     }
     public void Init()
     {
@@ -67,7 +68,7 @@ public class Guest : MonoBehaviour
         {
             var kind = Random.Range(1, 4);
             foodKinds[i] = (FoodKind)kind;
-            upScore += 75 * kind;
+            upScore += 300 * kind;
         }
         int x = -1;
         for (int i = 0; i < foodKinds.Count; i++)

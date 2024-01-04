@@ -15546,8 +15546,19 @@ MonoBehaviour:
   sounds:
   - audioClip: {fileID: 8300000, guid: 97d0e08391df4a94db0c2d02a39d9304, type: 3}
     key: Key
+    isLoop: 0
   - audioClip: {fileID: 8300000, guid: bc8cfc9a8644ceb40b4b901a38a85391, type: 3}
     key: Explosion
+    isLoop: 0
+  - audioClip: {fileID: 8300000, guid: 10391e1ecaf66534b899dd7e586f37f2, type: 3}
+    key: Success
+    isLoop: 0
+  - audioClip: {fileID: 8300000, guid: b5f3a5924057ee04fa5d1db22d4ea7c3, type: 3}
+    key: Fail
+    isLoop: 0
+  - audioClip: {fileID: 8300000, guid: 0ba3973c004cffc47aee46c6e3cca6e0, type: 3}
+    key: InGame_Background_Music
+    isLoop: 1
 --- !u!1001 &567423679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56777,6 +56788,11 @@ PrefabInstance:
         type: 3}
       propertyPath: isPlaying
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129469457363676046, guid: 13d33fa47cd691342a311026fc9bc988,
+        type: 3}
+      propertyPath: keyAmount
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8129469457363676046, guid: 13d33fa47cd691342a311026fc9bc988,
         type: 3}

@@ -99,7 +99,7 @@ public class Cooking_Pot : MonoBehaviour
                     yield return null;
                     if (Input.GetKeyDown(obj.keyCode))
                     {
-                        SoundManager.PlaySound("Key", 0.5f);
+                        SoundManager.PlaySound("Key", 0.5f, false);
                         Destroy(obj.gameObject);
                         break;
                     }
@@ -133,7 +133,7 @@ public class Cooking_Pot : MonoBehaviour
                 {
                     if (foodView != null) foodView.SetActive(false);
                     Destroy(EffectManager.SpawnEffect("Explosion", transform.position), 1);
-                    SoundManager.PlaySound("Explosion",0.5f);
+                    SoundManager.PlaySound("Explosion",0.5f, false);
                     break;
                 }
             }
@@ -174,7 +174,7 @@ public class Cooking_Pot : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
                 {
                     count--;
-                    SoundManager.PlaySound("Key", 0.1f);
+                    SoundManager.PlaySound("Key", 0.1f, false);
                 }
 
                 if (count <= 0)

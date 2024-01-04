@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour
         GuestManager.instance.DequeuePlayer();
         int scr = Mathf.RoundToInt(upScore / ((int)guestState + 1));
         score += scr;
-        Debug.Log(scr + "점 올랐습니다.");
         currentRoundGuestAmount--;
     }
     public void Fail()
@@ -80,6 +79,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < rounds.Count; i++)
         {
+            Debug.Log(i);
             yield return StartCoroutine(RoundStart(rounds[i]));
             yield return new WaitForSeconds(3);
         }
@@ -88,14 +88,14 @@ public class GameManager : MonoBehaviour
     {
         float time = 50 - (int)round.currentDifficulty * 5;
         currentRoundGuestAmount = 0;
-        for (int i = 0; i < round.roundGuestAmount; i++)
+        for (int i = 0; i < round.roundGuestAmount ; i++)
         {
             currentRoundGuestAmount++;
             yield return new WaitForSeconds(0.5f);
             var guest = GuestManager.instance.EnqueuePlayer().GetComponent<Guest>();
             guest.time = time;
         }
-        while (currentRoundGuestAmount <= 0)
+        while (currentRoundGuestAmount > 0)
         {
             yield return null;
         }

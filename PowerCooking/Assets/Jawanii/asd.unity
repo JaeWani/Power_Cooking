@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15240,6 +15240,8 @@ MonoBehaviour:
   sounds:
   - audioClip: {fileID: 8300000, guid: 97d0e08391df4a94db0c2d02a39d9304, type: 3}
     key: Key
+  - audioClip: {fileID: 8300000, guid: bc8cfc9a8644ceb40b4b901a38a85391, type: 3}
+    key: Explosion
 --- !u!1001 &567423679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51942,7 +51944,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 6
+  m_Speed: 8
   m_Acceleration: 75
   avoidancePriority: 50
   m_AngularSpeed: 0

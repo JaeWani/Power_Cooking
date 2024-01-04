@@ -142,6 +142,7 @@ public class Cooking_Pot : MonoBehaviour
         StartCoroutine(func());
         IEnumerator func()
         {
+
             var p = GameManager.instance.playerinteraction;
             p.isInteraction = true;
             var obj = Instantiate(beatPrefab, transform).GetComponent<TextMesh>();
@@ -149,6 +150,7 @@ public class Cooking_Pot : MonoBehaviour
             obj.transform.rotation = Quaternion.Euler(0,0,0);
             obj.transform.localScale = new Vector3(0.16f,0.16f,0.16f);
             int count = beatAmount;
+            var effect = EffectManager.SpawnEffect("Smoke", transform.position, transform);
             while (true)
             {
                 obj.text = count.ToString();

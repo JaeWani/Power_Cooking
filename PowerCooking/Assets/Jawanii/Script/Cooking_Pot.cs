@@ -85,8 +85,10 @@ public class Cooking_Pot : MonoBehaviour
         StartCoroutine(func());
         IEnumerator func()
         {
+            var p = GameManager.instance.playerinteraction;
             if(foodView != null) foodView.SetActive(true);
             int fail = 0;
+            p.isInteraction = true;
             for (int i = 0; i < keyAmount; i++)
             {
                 yield return new WaitForSeconds(0.01f);
@@ -143,6 +145,7 @@ public class Cooking_Pot : MonoBehaviour
                 player.foodObject = food;
                 if(foodView != null) foodView.SetActive(false);
             }
+            p.isInteraction = false;
             isPlaying = false;
         }
     }

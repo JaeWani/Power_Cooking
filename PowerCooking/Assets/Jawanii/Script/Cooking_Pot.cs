@@ -97,6 +97,7 @@ public class Cooking_Pot : MonoBehaviour
                     yield return null;
                     if (Input.GetKeyDown(obj.keyCode))
                     {
+                        SoundManager.PlaySound("Key");
                         Destroy(obj.gameObject);
                         break;
                     }

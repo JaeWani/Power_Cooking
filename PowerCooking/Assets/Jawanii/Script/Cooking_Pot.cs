@@ -144,7 +144,10 @@ public class Cooking_Pot : MonoBehaviour
         {
             var p = GameManager.instance.playerinteraction;
             p.isInteraction = true;
-            var obj = Instantiate(beatPrefab, transform.position + Vector3.up * 2, Quaternion.identity).GetComponent<TextMesh>();
+            var obj = Instantiate(beatPrefab, transform).GetComponent<TextMesh>();
+            obj.transform.localPosition = new Vector3(1,3,0);
+            obj.transform.rotation = Quaternion.Euler(0,0,0);
+            obj.transform.localScale = new Vector3(0.16f,0.16f,0.16f);
             int count = beatAmount;
             while (true)
             {

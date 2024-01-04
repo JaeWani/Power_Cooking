@@ -25,6 +25,8 @@ public class Cooking_Pot : MonoBehaviour
     public List<SpriteRenderer> resources = new List<SpriteRenderer>();
     public List<Sprite> sprites = new List<Sprite>();
 
+    public GameObject foodView;
+
     [SerializeField] private RaycastHit raycastHit;
     private float maxDistance = 3;
 
@@ -49,6 +51,7 @@ public class Cooking_Pot : MonoBehaviour
     #endregion
     private void Start()
     {
+        if(foodView != null) foodView.SetActive(false);
         needResourceAmount = needResource.Count;
         resourceObject.SetActive(false);
         currentNeedResource = new List<FoodKind>(needResource);
@@ -82,6 +85,7 @@ public class Cooking_Pot : MonoBehaviour
         StartCoroutine(func());
         IEnumerator func()
         {
+            if(foodView != null) foodView.SetActive(true);
             int fail = 0;
             for (int i = 0; i < keyAmount; i++)
             {
@@ -122,7 +126,11 @@ public class Cooking_Pot : MonoBehaviour
                     }
                 }
 
-                if (fail > 0) break;
+                if (fail > 0) 
+                {
+                    if(foodView != null) foodView.SetActive(false);
+                    break;
+                }
             }
             if (fail <= 0)
             {
@@ -131,17 +139,18 @@ public class Cooking_Pot : MonoBehaviour
                 var food = Instantiate(foodPrefab, player.transform);
                 food.transform.localPosition = new Vector3(0, 1, 0);
                 player.foodObject = food;
+                if(foodView != null) foodView.SetActive(false);
             }
             isPlaying = false;
         }
     }
     protected void KeyBeat()
     {
-
         isPlaying = true;
         StartCoroutine(func());
         IEnumerator func()
         {
+            if(foodView != null) foodView.SetActive(true);
 
             var p = GameManager.instance.playerinteraction;
             p.isInteraction = true;
@@ -150,6 +159,7 @@ public class Cooking_Pot : MonoBehaviour
             obj.transform.rotation = Quaternion.Euler(0,0,0);
             obj.transform.localScale = new Vector3(0.16f,0.16f,0.16f);
             int count = beatAmount;
+
             var effect = EffectManager.SpawnEffect("Smoke", transform.position, transform);
             while (true)
             {
@@ -167,6 +177,8 @@ public class Cooking_Pot : MonoBehaviour
                     break;
                 }
             }
+            if(foodView != null) foodView.SetActive(false);
+            Destroy(effect);
             Destroy(obj.gameObject);
             p.isInteraction = false;
             isPlaying = false;

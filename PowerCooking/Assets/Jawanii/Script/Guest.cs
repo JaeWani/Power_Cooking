@@ -44,6 +44,10 @@ public class Guest : MonoBehaviour
         Interaction();
     }
 
+    private void LateUpdate()
+    {
+
+    }
     private void RandomOrder()
     {
         orderAmount = Random.Range(1, maxOrderAmount + 1);
@@ -83,12 +87,12 @@ public class Guest : MonoBehaviour
                     break;
                 }
             }
-            if (currentOrderAmount == maxOrderAmount)
+            if (currentOrderAmount == orderAmount)
             {
-
                 Debug.Log("S");
                 filling.StopAllCoroutines();
             }
+
         }
     }
 }

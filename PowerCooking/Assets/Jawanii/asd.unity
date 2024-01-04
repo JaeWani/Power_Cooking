@@ -51323,6 +51323,48 @@ MonoBehaviour:
   playerHp: 3
   inGameGold: 100
   score: 0
+  rounds:
+  - currentDifficulty: 0
+    roundGuestAmount: 3
+    time: 0
+  - currentDifficulty: 0
+    roundGuestAmount: 4
+    time: 0
+  - currentDifficulty: 1
+    roundGuestAmount: 2
+    time: 0
+  - currentDifficulty: 1
+    roundGuestAmount: 3
+    time: 0
+  - currentDifficulty: 1
+    roundGuestAmount: 4
+    time: 0
+  - currentDifficulty: 2
+    roundGuestAmount: 3
+    time: 0
+  - currentDifficulty: 2
+    roundGuestAmount: 3
+    time: 0
+  - currentDifficulty: 2
+    roundGuestAmount: 3
+    time: 0
+  - currentDifficulty: 3
+    roundGuestAmount: 2
+    time: 0
+  - currentDifficulty: 3
+    roundGuestAmount: 2
+    time: 0
+  - currentDifficulty: 3
+    roundGuestAmount: 2
+    time: 0
+  - currentDifficulty: 3
+    roundGuestAmount: 2
+    time: 0
+  - currentDifficulty: 4
+    roundGuestAmount: 2
+    time: 0
+  currentRoundIndex: 0
+  currentRoundGuestAmount: 0
 --- !u!4 &2038481752
 Transform:
   m_ObjectHideFlags: 0

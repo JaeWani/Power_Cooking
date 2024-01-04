@@ -51,7 +51,7 @@ public class Cooking_Pot : MonoBehaviour
     #endregion
     private void Start()
     {
-        if(foodView != null) foodView.SetActive(false);
+        if (foodView != null) foodView.SetActive(false);
         needResourceAmount = needResource.Count;
         resourceObject.SetActive(false);
         currentNeedResource = new List<FoodKind>(needResource);
@@ -86,7 +86,7 @@ public class Cooking_Pot : MonoBehaviour
         IEnumerator func()
         {
             var p = GameManager.instance.playerinteraction;
-            if(foodView != null) foodView.SetActive(true);
+            if (foodView != null) foodView.SetActive(true);
             int fail = 0;
             p.isInteraction = true;
             for (int i = 0; i < keyAmount; i++)
@@ -99,7 +99,7 @@ public class Cooking_Pot : MonoBehaviour
                     yield return null;
                     if (Input.GetKeyDown(obj.keyCode))
                     {
-                        SoundManager.PlaySound("Key");
+                        SoundManager.PlaySound("Key", 0.5f);
                         Destroy(obj.gameObject);
                         break;
                     }
@@ -129,9 +129,9 @@ public class Cooking_Pot : MonoBehaviour
                     }
                 }
 
-                if (fail > 0) 
+                if (fail > 0)
                 {
-                    if(foodView != null) foodView.SetActive(false);
+                    if (foodView != null) foodView.SetActive(false);
                     Destroy(EffectManager.SpawnEffect("Explosion", transform.position), 1);
                     break;
                 }
@@ -143,7 +143,7 @@ public class Cooking_Pot : MonoBehaviour
                 var food = Instantiate(foodPrefab, player.transform);
                 food.transform.localPosition = new Vector3(0, 1, 0);
                 player.foodObject = food;
-                if(foodView != null) foodView.SetActive(false);
+                if (foodView != null) foodView.SetActive(false);
             }
             p.isInteraction = false;
             isPlaying = false;
@@ -155,14 +155,14 @@ public class Cooking_Pot : MonoBehaviour
         StartCoroutine(func());
         IEnumerator func()
         {
-            if(foodView != null) foodView.SetActive(true);
+            if (foodView != null) foodView.SetActive(true);
 
             var p = GameManager.instance.playerinteraction;
             p.isInteraction = true;
             var obj = Instantiate(beatPrefab, transform).GetComponent<TextMesh>();
-            obj.transform.position = new Vector3(1,3,0);
-            obj.transform.rotation = Quaternion.Euler(0,0,0);
-            obj.transform.localScale = new Vector3(0.16f,0.16f,0.16f);
+            obj.transform.position = new Vector3(1, 3, 0);
+            obj.transform.rotation = Quaternion.Euler(0, 0, 0);
+            obj.transform.localScale = new Vector3(0.16f, 0.16f, 0.16f);
             int count = beatAmount;
 
             var effect = EffectManager.SpawnEffect("Smoke", transform.position, transform);
@@ -170,10 +170,10 @@ public class Cooking_Pot : MonoBehaviour
             {
                 obj.text = count.ToString();
                 yield return null;
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) 
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
                 {
                     count--;
-                    SoundManager.PlaySound("Key");
+                    SoundManager.PlaySound("Key", 0.1f);
                 }
 
                 if (count <= 0)
@@ -186,7 +186,7 @@ public class Cooking_Pot : MonoBehaviour
                     break;
                 }
             }
-            if(foodView != null) foodView.SetActive(false);
+            if (foodView != null) foodView.SetActive(false);
             Destroy(effect);
             Destroy(obj.gameObject);
             p.isInteraction = false;

@@ -44,7 +44,7 @@ public class GuestManager : MonoBehaviour
     /// <summary>
     /// 큐에 플레이어 추가
     /// </summary>
-    public void EnqueuePlayer()
+    public GameObject EnqueuePlayer()
     {
         if (playerQueue.Count < points.Length)
         {
@@ -52,7 +52,9 @@ public class GuestManager : MonoBehaviour
             newPlayer.GetComponent<GuestMovement>().entrance = transform;
             playerQueue.Enqueue(newPlayer);
             UpdatePlayerPositions();
+            return newPlayer.gameObject;
         }
+        else return null;
     }
 
     /// <summary>

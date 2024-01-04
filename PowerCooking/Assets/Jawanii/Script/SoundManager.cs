@@ -33,7 +33,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private void _PlaySound(string key)
+    private void _PlaySound(string key , float volume)
     {
         var obj = new GameObject("Audio Source");
         var audioSource = obj.AddComponent<AudioSource>();
@@ -43,11 +43,12 @@ public class SoundManager : MonoBehaviour
         {
             float time = soundDictionary[key].audioClip.length;
             audioSource.clip = soundDictionary[key].audioClip;
+            audioSource.volume = volume;
             audioSource.Play();
             yield return new WaitForSeconds(time);
             Destroy(obj);
         }
     }
-    public static void PlaySound(string key) => soundManager._PlaySound(key);
+    public static void PlaySound(string key, float volume) => soundManager._PlaySound(key, volume);
 
 }

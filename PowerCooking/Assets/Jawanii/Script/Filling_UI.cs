@@ -74,7 +74,7 @@ public class Filling_UI : MonoBehaviour
 
             yield return null;
         }
-        GameManager.instance.playerHp--;
+        GameManager.instance.Fail();
         // 시간 0되면 할 것
     }
 }

@@ -3,6 +3,25 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+[System.Serializable]
+public class Round
+{
+    public enum Difficulty
+    {
+        veryEasy,
+        easy,
+        normal,
+        hard,
+        veryHard
+    }
+
+    public Difficulty currentDifficulty;
+
+    public int roundGuestAmount;
+
+    [HideInInspector] public float time;
+}
+
 public class GameManager : MonoBehaviour
 {
     #region  Variable
@@ -20,6 +39,11 @@ public class GameManager : MonoBehaviour
     public int playerHp = 3;
     public int inGameGold;
     public int score;
+
+    [Header("Guest")]
+    public List<Round> rounds = new List<Round>();
+    public int currentRoundIndex = 0;
+    public int currentRoundGuestAmount;
     #endregion
 
 
@@ -31,23 +55,49 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        StartCoroutine(GameStart());
     }
 
     void Update()
     {
 
     }
-
     public void Success(GuestState guestState, float upScore)
     {
         GuestManager.instance.DequeuePlayer();
         int scr = Mathf.RoundToInt(upScore / ((int)guestState + 1));
         score += scr;
         Debug.Log(scr + "점 올랐습니다.");
+        currentRoundGuestAmount--;
     }
     public void Fail()
     {
-
+        playerHp--;
+        currentRoundGuestAmount--;
+        GuestManager.instance.DequeuePlayer();
+    }
+    public IEnumerator GameStart()
+    {
+        for (int i = 0; i < rounds.Count; i++)
+        {
+            yield return StartCoroutine(RoundStart(rounds[i]));
+            yield return new WaitForSeconds(3);
+        }
+    }
+    public IEnumerator RoundStart(Round round)
+    {
+        float time = 50 - (int)round.currentDifficulty * 5;
+        currentRoundGuestAmount = 0;
+        for (int i = 0; i < round.roundGuestAmount; i++)
+        {
+            currentRoundGuestAmount++;
+            yield return new WaitForSeconds(0.5f);
+            var guest = GuestManager.instance.EnqueuePlayer().GetComponent<Guest>();
+            guest.time = time;
+        }
+        while (currentRoundGuestAmount <= 0)
+        {
+            yield return null;
+        }
     }
 }

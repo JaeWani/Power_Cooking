@@ -46,21 +46,24 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, moveLayer)) 
+        if (!GetComponent<Playerinteraction>().isInteraction)
         {
-            this.agent.ResetPath();
-            this.agent.isStopped = false;
-            this.agent.updatePosition = true;
-            this.agent.updateRotation = true;
-
-            agent.SetDestination(hit.point);
-
-            lookPosName = "Floor";
-            stopPointPos = hit.point;
-
-            if (clickEffect != null) 
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, moveLayer))
             {
-                Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
+                this.agent.ResetPath();
+                this.agent.isStopped = false;
+                this.agent.updatePosition = true;
+                this.agent.updateRotation = true;
+
+                agent.SetDestination(hit.point);
+
+                lookPosName = "Floor";
+                stopPointPos = hit.point;
+
+                if (clickEffect != null)
+                {
+                    Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
+                }
             }
         }
     }
@@ -69,20 +72,23 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, prepareCookLayer))
+        if (!GetComponent<Playerinteraction>().isInteraction)
         {
-            if (Vector3.Distance(hit.transform.GetComponent<KitchenAppliance>().stopPoint.position, transform.position) < checkRange)
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, prepareCookLayer))
             {
-                this.agent.ResetPath();
-                this.agent.isStopped = false;
-                this.agent.updatePosition = true;
-                this.agent.updateRotation = true;
+                if (Vector3.Distance(hit.transform.GetComponent<KitchenAppliance>().stopPoint.position, transform.position) < checkRange)
+                {
+                    this.agent.ResetPath();
+                    this.agent.isStopped = false;
+                    this.agent.updatePosition = true;
+                    this.agent.updateRotation = true;
 
-                agent.SetDestination(hit.transform.GetComponent<KitchenAppliance>().stopPoint.position);
+                    agent.SetDestination(hit.transform.GetComponent<KitchenAppliance>().stopPoint.position);
 
-                lookPosName = "KitchenAppliance";
-                stopPointPos = hit.transform.GetComponent<KitchenAppliance>().stopPoint.position;
-                kitchenAppliancePos = hit.transform.position;
+                    lookPosName = "KitchenAppliance";
+                    stopPointPos = hit.transform.GetComponent<KitchenAppliance>().stopPoint.position;
+                    kitchenAppliancePos = hit.transform.position;
+                }
             }
         }
     }
@@ -126,6 +132,11 @@ public class PlayerController : MonoBehaviour
 
         if (GetComponent<Playerinteraction>().isInteraction) 
         {
+            if (!agent.isStopped) 
+            {
+                ClickToPrepareCook();
+            }
+
             agent.isStopped = true;
         }
         else

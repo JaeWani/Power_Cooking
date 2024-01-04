@@ -18,6 +18,8 @@ public class Guest : MonoBehaviour
     public float time = 100;
 
     public int maxOrderAmount;
+    public int orderAmount;
+    public int currentOrderAmount = 0;
 
     public List<FoodKind> foodKinds;
     public List<GameObject> orders;
@@ -27,13 +29,14 @@ public class Guest : MonoBehaviour
     public GuestState currentGuestState = GuestState.VeryGood;
 
     public GameObject Fillng_Object;
+    private Filling_UI filling;
 
     void Start()
     {
         RandomOrder();
-        var filling = Instantiate(Fillng_Object,GameManager.instance.keyCanvas.transform).GetComponent<Filling_UI>();
-        filling.StartBar(time,currentGuestState);
+        filling = Instantiate(Fillng_Object, GameManager.instance.keyCanvas.transform).GetComponent<Filling_UI>();
         filling.guest = this;
+        filling.StartBar(time);
     }
 
     private void OnMouseDown()
@@ -43,7 +46,8 @@ public class Guest : MonoBehaviour
 
     private void RandomOrder()
     {
-        foodKinds = new List<FoodKind>(new FoodKind[Random.Range(1, maxOrderAmount + 1)]);
+        orderAmount = Random.Range(1, maxOrderAmount + 1);
+        foodKinds = new List<FoodKind>(new FoodKind[orderAmount]);
         List<GameObject> order = new List<GameObject>();
         for (int i = 0; i < foodKinds.Count; i++)
         {
@@ -67,19 +71,23 @@ public class Guest : MonoBehaviour
     {
         if (canInteraction)
         {
-            Debug.Log("asd");
             for (int i = 0; i < foodKinds.Count; i++)
             {
                 if (GameManager.instance.playerinteraction.currentFood == foodKinds[i])
                 {
-                    Debug.Log("어익호난");
                     Destroy(orders[i]);
                     GameManager.instance.playerinteraction.currentFood = FoodKind.Null;
                     Destroy(GameManager.instance.playerinteraction.foodObject);
                     foodKinds[i] = FoodKind.Null;
+                    currentOrderAmount++;
                     break;
                 }
-                else Debug.Log("엄");
+            }
+            if (currentOrderAmount == maxOrderAmount)
+            {
+
+                Debug.Log("S");
+                filling.StopAllCoroutines();
             }
         }
     }

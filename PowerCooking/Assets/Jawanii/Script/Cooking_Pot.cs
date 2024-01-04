@@ -172,7 +172,6 @@ public class Cooking_Pot : MonoBehaviour
     {
         if (isPlayer)
         {
-            Debug.Log("123123");
             var player = GameManager.instance.playerinteraction;
             if (player.currentFood == FoodKind.Null)
             {

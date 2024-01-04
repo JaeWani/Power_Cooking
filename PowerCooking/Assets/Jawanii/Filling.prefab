@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39215687, g: 1, b: 0.6666667, a: 1}
+  m_Color: {r: 1, g: 0.5882353, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -266,3 +266,6 @@ MonoBehaviour:
   good: {fileID: 21300000, guid: f97c1fd610efaab46a3e8b01f0f1f92c, type: 3}
   normal: {fileID: 21300000, guid: 176f54bd8da1d5b4cbd338f682bae05f, type: 3}
   bad: {fileID: 21300000, guid: 3d103cfc17dfb6f478c85494ec939357, type: 3}
+  veryBad: {fileID: 21300000, guid: c96b0597b90dc6148900d9d5be166cc9, type: 3}
+  LightGreen: {r: 0.39215687, g: 1, b: 0.6666667, a: 1}
+  Orange: {r: 1, g: 0.5882353, b: 0, a: 1}

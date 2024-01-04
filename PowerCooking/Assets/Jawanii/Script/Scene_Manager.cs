@@ -8,6 +8,7 @@ public class Scene_Manager : MonoBehaviour
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject panel;
     [SerializeField] GameObject back;
+    [SerializeField] GameObject buttons;
 
     public static Scene_Manager instance;
 
@@ -21,15 +22,30 @@ public class Scene_Manager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        StartCoroutine(Init());
+    }
+
+    IEnumerator Init()
+    {
+        buttons.SetActive(false);
+        yield return new WaitForSeconds(2.5f);
+        buttons.SetActive(true);
+    }
+
     private void Update()
     {
-        if (panel.activeSelf) 
+        if (panel != null) 
         {
-            back.SetActive(true);
-        }
-        else
-        {
-            back.SetActive(false);
+            if (panel.activeSelf)
+            {
+                back.SetActive(true);
+            }
+            else
+            {
+                back.SetActive(false);
+            }
         }
     }
 

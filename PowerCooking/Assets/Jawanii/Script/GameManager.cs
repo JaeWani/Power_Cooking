@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using Unity.Collections;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class Round
@@ -48,11 +50,16 @@ public class GameManager : MonoBehaviour
 
             if (playerHp == 2) Shake_HP(Hp_Img[0]);
             if (playerHp == 1) Shake_HP(Hp_Img[1]);
-            if (playerHp == 0) Shake_HP(Hp_Img[2]);
+            if (playerHp == 0)
+            {
+                Shake_HP(Hp_Img[2]);
+                GameOver();
+            }
         }
     }
     public int inGameGold;
     public int score;
+    public string playerName;
 
     [Header("UI")]
     [SerializeField] private List<Image> Hp_Img;
@@ -62,6 +69,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roundText;
     [SerializeField] private TextMeshProUGUI difficultyText;
     [SerializeField] private TextMeshProUGUI guestText;
+    [SerializeField] private RectTransform inputField_Panel;
+
+    [SerializeField] private TMP_InputField nameInputField;
+    [SerializeField] private Button enterButton;
+
+    [SerializeField] private RectTransform gameOverPanel;
+    [SerializeField] private Button gameOverTitleButton;
+    [SerializeField] private Button titleButton;
 
     [Header("Guest")]
     public List<Round> rounds = new List<Round>();
@@ -78,15 +93,48 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(GameStart());
-        SoundManager.PlaySound("InGame_Background_Music", 0.8f,true);
+
+        SoundManager.PlaySound("InGame_Background_Music", 0.8f, true);
+        enterButton.onClick.AddListener(() => Enter());
+        gameOverTitleButton.onClick.AddListener(() =>
+        {
+
+            Transitioner.Instance.TransitionToScene("Title");
+        });
+        titleButton.onClick.AddListener(() =>
+        {
+            DataManager.instance.AddUserData(playerName, score);
+            DataManager.instance.Save();
+            Transitioner.Instance.TransitionToScene("Title");
+        });
+
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)) PlayerHP--;
-        scoreText.text = score.ToString();
+        if (Input.GetKeyDown(KeyCode.F12)) PlayerHP--;
 
+        scoreText.text = score.ToString();
+    }
+
+    private void Enter()
+    {
+        if (!string.IsNullOrEmpty(nameInputField.text))
+        {
+            playerName = nameInputField.text;
+            inputField_Panel.DOAnchorPosX(-3000, 1).OnComplete(() =>
+            {
+                StartCoroutine(GameStart());
+                inputField_Panel.gameObject.SetActive(false);
+            });
+        }
+    }
+    private void GameOver()
+    {
+        DataManager.instance.AddUserData(playerName, score);
+        DataManager.instance.Save();
+        Destroy(playerinteraction.gameObject);
+        gameOverPanel.DOAnchorPosX(0, 1);
     }
     public void Success(GuestState guestState, float upScore, Vector3 position)
     {
@@ -106,10 +154,10 @@ public class GameManager : MonoBehaviour
     }
     public void Fail()
     {
-        playerHp--;
+        PlayerHP--;
         currentRoundGuestAmount--;
         GuestManager.instance.DequeuePlayer();
-        SoundManager.PlaySound("Fail", 1,false);
+        SoundManager.PlaySound("Fail", 1, false);
     }
     public IEnumerator GameStart()
     {

@@ -55,9 +55,9 @@ public class Guest : MonoBehaviour
         Interaction();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.F11)) GameManager.instance.Success(currentGuestState, upScore,transform.position + Vector3.up * 1.5f);
     }
     private void RandomOrder()
     {

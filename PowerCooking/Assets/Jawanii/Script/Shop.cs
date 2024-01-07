@@ -30,7 +30,7 @@ public class Shop : MonoBehaviour
                     player.AddFood(foodKind);
                     var food = Instantiate(foodPrefab, player.transform);
                     if(isTurn) food.transform.rotation = Quaternion.Euler(0,0,90);
-                    food.transform.localPosition = new Vector3(0, 1, 0);
+                    food.transform.localPosition = new Vector3(0, 0.5f, 0);
                     player.foodObject = food;
                 }
                 else

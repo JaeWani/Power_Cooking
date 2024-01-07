@@ -142,8 +142,9 @@ public class Cooking_Pot : MonoBehaviour
                 var player = GameManager.instance.playerinteraction;
                 player.AddFood(currentKind);
                 var food = Instantiate(foodPrefab, player.transform);
-                food.transform.localPosition = new Vector3(0, 1, 0);
+                food.transform.localPosition = new Vector3(0, 0.5f, 0);
                 player.foodObject = food;
+                EffectManager.SpawnEffect("Check",transform.position + Vector3.up * 2);
                 if (foodView != null) foodView.SetActive(false);
             }
             p.isInteraction = false;
@@ -161,7 +162,7 @@ public class Cooking_Pot : MonoBehaviour
             var p = GameManager.instance.playerinteraction;
             p.isInteraction = true;
             var obj = Instantiate(beatPrefab, transform).GetComponent<TextMesh>();
-            obj.transform.position = new Vector3(1, 3, 0);
+            obj.transform.localPosition = new Vector3(1, 3, 0);
             obj.transform.rotation = Quaternion.Euler(0, 0, 0);
             obj.transform.localScale = new Vector3(0.16f, 0.16f, 0.16f);
             int count = beatAmount;
@@ -182,8 +183,9 @@ public class Cooking_Pot : MonoBehaviour
                     var player = GameManager.instance.playerinteraction;
                     player.AddFood(currentKind);
                     var food = Instantiate(foodPrefab, player.transform);
-                    food.transform.localPosition = new Vector3(0, 1, 0);
+                    food.transform.localPosition = new Vector3(0, 0.5f, 0);
                     player.foodObject = food;
+                    EffectManager.SpawnEffect("Check",transform.position + Vector3.up * 2);
                     break;
                 }
             }

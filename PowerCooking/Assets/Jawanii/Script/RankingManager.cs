@@ -10,6 +10,8 @@ public class RankingManager : MonoBehaviour
     public Button titleButton;
     private void Start()
     {
+        UIManager.SetActiveUI(1, true);
+
         DataManager.instance.Load();
         string _1st = "";
         string _2st = "";
@@ -27,11 +29,16 @@ public class RankingManager : MonoBehaviour
         _3stText.text = _3st;
 
 
-        if(DataManager.instance.userDatas[0] != null) _1stName.text = DataManager.instance.userDatas[0].name;
+        if (DataManager.instance.userDatas[0] != null) _1stName.text = DataManager.instance.userDatas[0].name;
         else _1stName.tag = "null";
 
-        if(DataManager.instance.userDatas[0] != null) _1stScore.text = DataManager.instance.userDatas[0].score.ToString();
+        if (DataManager.instance.userDatas[0] != null) _1stScore.text = DataManager.instance.userDatas[0].score.ToString();
         else _1stScore.text = "null";
-        titleButton.onClick.AddListener(() => Transitioner.Instance.TransitionToScene("Title"));
+
+        titleButton.onClick.AddListener(() =>
+        {
+            Transitioner.Instance.TransitionToScene("Title");
+            UIManager.SetActiveUI(0, false);
+        });
     }
 }

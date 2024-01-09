@@ -10,29 +10,22 @@ public class TitleManager : MonoBehaviour
     public Button start, ranking, rule, exit;
     void Start()
     {
+        UIManager.SetActiveUI(1,true);
+
         start.onClick.AddListener(() =>
         {
             Transitioner.Instance.TransitionToScene("asd");
-            start.gameObject.SetActive(false);
-            ranking.gameObject.SetActive(false);
-            rule.gameObject.SetActive(false);
-            exit.gameObject.SetActive(false);
+            UIManager.SetActiveUI(0,false);
         });
         ranking.onClick.AddListener(() =>
         {
             Transitioner.Instance.TransitionToScene("Ranking");
-            start.gameObject.SetActive(false);
-            ranking.gameObject.SetActive(false);
-            rule.gameObject.SetActive(false);
-            exit.gameObject.SetActive(false);
+            UIManager.SetActiveUI(0,false);
         });
         rule.onClick.AddListener(() =>
         {
-             Transitioner.Instance.TransitionToScene("Rule");
-            start.gameObject.SetActive(false);
-            ranking.gameObject.SetActive(false);
-            rule.gameObject.SetActive(false);
-            exit.gameObject.SetActive(false);
+            Transitioner.Instance.TransitionToScene("Rule");
+            UIManager.SetActiveUI(0,false);
         });
         exit.onClick.AddListener(() => Application.Quit());
     }

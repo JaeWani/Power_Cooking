@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Title.unity
     guid: 0574a879184b45a4ebe74d8c6630b74c
   - enabled: 1
-    path: Assets/Jawanii/asd.unity
+    path: Assets/asd.unity
     guid: acf74cc02a7feb74995f31b1de5537b5
   - enabled: 1
     path: Assets/Ranking.unity

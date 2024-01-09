@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
     public Canvas mainCanvas;
     public Canvas keyCanvas;
 
+    public Camera mainCamera;
+    public Vector3 cameraStartPos;
+
     public Playerinteraction playerinteraction;
 
     public List<Sprite> foodSprites = new List<Sprite>();
@@ -69,6 +72,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roundText;
     [SerializeField] private TextMeshProUGUI difficultyText;
     [SerializeField] private TextMeshProUGUI guestText;
+    [SerializeField] private TextMeshProUGUI errorText;
     [SerializeField] private RectTransform inputField_Panel;
 
     [SerializeField] private TMP_InputField nameInputField;
@@ -93,6 +97,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        mainCamera = Camera.main;
+        cameraStartPos = mainCamera.transform.position;
 
         SoundManager.PlaySound("InGame_Background_Music", 0.8f, true);
         enterButton.onClick.AddListener(() => Enter());
@@ -105,9 +111,9 @@ public class GameManager : MonoBehaviour
         {
             DataManager.instance.AddUserData(playerName, score);
             DataManager.instance.Save();
+            UIManager.SetActiveUI(0, false);
             Transitioner.Instance.TransitionToScene("Title");
         });
-
     }
 
     void Update()
@@ -119,14 +125,24 @@ public class GameManager : MonoBehaviour
 
     private void Enter()
     {
-        if (!string.IsNullOrEmpty(nameInputField.text))
+        if (!string.IsNullOrWhiteSpace(nameInputField.text))
         {
+
+            Debug.Log(nameInputField.text);
             playerName = nameInputField.text;
             inputField_Panel.DOAnchorPosX(-3000, 1).OnComplete(() =>
             {
                 StartCoroutine(GameStart());
                 inputField_Panel.gameObject.SetActive(false);
             });
+        }
+        else
+        {
+            Debug.Log("Null or Empty");
+            UIManager.StopAllCoroutine();
+            UIManager.SetActiveSelectUI(errorText.gameObject, 0, true);
+            UIManager.SetActiveSelectUI(errorText.gameObject, 1.5f, false);
+
         }
     }
     private void GameOver()
@@ -210,4 +226,20 @@ public class GameManager : MonoBehaviour
         image.rectTransform.DOShakeAnchorPos(1, 30, 10, 90, false).OnComplete(() => image.gameObject.SetActive(false));
     }
 
+    public void PlayerCamera()
+    {
+        Sequence s = DOTween.Sequence();
+        mainCamera.transform.DOLocalMove(playerinteraction.transform.position + Vector3.up, 1f).SetEase(Ease.Linear);
+        DOVirtual.Float(mainCamera.fieldOfView, 90, 1f, v => SetFieldOfView(v));
+
+    }
+    private void SetFieldOfView(float a)
+    {
+        mainCamera.fieldOfView = a;
+    }
+    public void CameraOrignalPos()
+    {
+        DOVirtual.Float(mainCamera.fieldOfView, 22.7f, 1f, v => SetFieldOfView(v));
+        mainCamera.transform.DOLocalMove(cameraStartPos, 1f).SetEase(Ease.Linear);
+    }
 }

@@ -8,7 +8,12 @@ public class Rule : MonoBehaviour
     [SerializeField] private Button Titlebutton;
     void Start()
     {
-        Titlebutton.onClick.AddListener(() => Transitioner.Instance.TransitionToScene("Title"));
+        UIManager.SetActiveUI(1, true);
+        Titlebutton.onClick.AddListener(() =>
+        {
+            UIManager.SetActiveUI(0, false);
+            Transitioner.Instance.TransitionToScene("Title");
+        });
     }
 
 }

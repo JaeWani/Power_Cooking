@@ -32,11 +32,11 @@ public class DataManager : MonoBehaviour
     public void Save()
     {
         Debug.Log("아 제발");
-        ES3.Save("InGame", userDatas);
+        ES3.Save("New_Data", userDatas);
     }
     public void Load()
     {
-        userDatas = ES3.Load<List<UserData>>("InGame",defaultDatas);
+        userDatas = ES3.Load<List<UserData>>("New_Data",defaultDatas);
         userDatas.Sort(delegate (UserData A, UserData B) { return A.score.CompareTo(B.score); });
         userDatas.Reverse();
     }
